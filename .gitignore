@@ -1,0 +1,13 @@
+# Arquivos de configuração do Eclipse
+.classpath
+.project
+.settings/
+
+# Pastas e arquivos do Maven
+target/
+
+
+# Banco de dados
+database/
+
+
