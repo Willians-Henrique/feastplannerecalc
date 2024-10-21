@@ -2,12 +2,14 @@
 .classpath
 .project
 .settings/
+.DS_Store
 
 # Pastas e arquivos do Maven
 target/
 
 
 # Banco de dados
-database/
+# Ignora apenas o arquivo de banco de dados com a extensão .db
+*.db
 
 
