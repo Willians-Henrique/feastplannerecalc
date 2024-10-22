@@ -174,6 +174,7 @@ public class DataInitializer {
             new Object[]{"File Mignon", 1, 5, 0, false, 1.0},
             new Object[]{"Picanha Suina", 1, 5, 0, false, 1.0},
             new Object[]{"Lombo", 1, 5, 0, false, 1.0},
+            new Object[]{"Linguiça", 1, 5, 0, false, 1.0},
             new Object[]{"Paleta", 1, 5, 0, false, 1.0},
             new Object[]{"Arroz", 1, 6, 0, false, 1.0},
             new Object[]{"Farofa", 1, 6, 0, false, 1.0},
