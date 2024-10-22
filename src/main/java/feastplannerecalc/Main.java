@@ -1,11 +1,13 @@
 package feastplannerecalc;
 
 import feastplannerecalc.database.HibernateUtil;
+import feastplannerecalc.util.DataInitializer;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.hibernate.Session;
 
 import java.util.Map;
 
@@ -26,7 +28,14 @@ public class Main {
             LoggerConfig logger = map.get(key);
             logger.setLevel(Level.OFF);
         }
+        
+        // Open a Hibernate session
+        Session session = HibernateUtil.getSessionFactory().openSession();
 
+        // Call DataInitializer to populate initial data in the database
+        DataInitializer.initializeData(session);
+
+        
         // Print a message to confirm initialization
         System.out.println("Database initialized successfully.");
     }

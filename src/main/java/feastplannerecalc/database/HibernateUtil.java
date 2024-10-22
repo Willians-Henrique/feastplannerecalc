@@ -51,6 +51,12 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Pessoa.class);
                 configuration.addAnnotatedClass(PessoaCategoria.class);
 
+                // Adicionando as novas classes para armazenar os resultados da simulação
+                configuration.addAnnotatedClass(ResultadoSimulacao.class);
+                configuration.addAnnotatedClass(ResultadoChurrasco.class);
+                configuration.addAnnotatedClass(ResultadoSalgado.class);
+
+
                 // Registry
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
