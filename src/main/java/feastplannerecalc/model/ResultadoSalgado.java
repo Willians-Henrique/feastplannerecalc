@@ -17,9 +17,15 @@ public class ResultadoSalgado {
     // Salgados
     @Column(name = "pizza", nullable = false)
     private Double pizza;
+    
+    @Column(name = "pizza_queijo", nullable = false)
+    private Double pizzaDeQueijo;
 
     @Column(name = "esfirra", nullable = false)
     private Double esfirra;
+    
+    @Column(name = "esfirra_queijo", nullable = false)
+    private Double esfirraDeQueijo;
 
     @Column(name = "hamburger", nullable = false)
     private Double hamburger;
@@ -27,6 +33,9 @@ public class ResultadoSalgado {
     @Column(name = "empadinha", nullable = false)
     private Double empadinha;
 
+    @Column(name = "empadinha_queijo", nullable = false)
+    private Double empadinhaDeQueijo;
+    
     @Column(name = "coxinha", nullable = false)
     private Double coxinha;
 
@@ -35,15 +44,21 @@ public class ResultadoSalgado {
 
     @Column(name = "pastel", nullable = false)
     private Double pastel;
+    
+    @Column(name = "pastel_queijo", nullable = false)
+    private Double pastelDeQueijo;
 
     @Column(name = "bolinha_queijo", nullable = false)
     private Double bolinhaDeQueijo;
 
     @Column(name = "risoles", nullable = false)
     private Double risoles;
-
+    
     @Column(name = "cigarette", nullable = false)
     private Double cigarette;
+    
+    @Column(name = "cigarette_queijo", nullable = false)
+    private Double cigaretteDeQueijo;
 
     @Column(name = "croquete", nullable = false)
     private Double croquete;
@@ -93,7 +108,7 @@ public class ResultadoSalgado {
     public void setSimulacao(ResultadoSimulacao simulacao) {
         this.simulacao = simulacao;
     }
-
+    
     public Double getPizza() {
         return pizza;
     }
@@ -102,12 +117,28 @@ public class ResultadoSalgado {
         this.pizza = pizza;
     }
 
+    public Double getPizzaDeQiejo() {
+        return pizzaDeQueijo;
+    }
+
+    public void setPizzaDeQueijo(Double pizzaDeQueijo) {
+        this.pizzaDeQueijo = pizzaDeQueijo;
+    }
+    
     public Double getEsfirra() {
         return esfirra;
     }
 
     public void setEsfirra(Double esfirra) {
         this.esfirra = esfirra;
+    }
+    
+    public Double getEsfirraDeQueijo() {
+        return esfirraDeQueijo;
+    }
+
+    public void setEsfirraDeQueijo(Double esfirraDeQueijo) {
+        this.esfirraDeQueijo = esfirraDeQueijo;
     }
 
     public Double getHamburger() {
@@ -124,6 +155,14 @@ public class ResultadoSalgado {
 
     public void setEmpadinha(Double empadinha) {
         this.empadinha = empadinha;
+    }
+    
+    public Double getEmpadinhaDeQueijo() {
+        return empadinhaDeQueijo;
+    }
+
+    public void setEmpadinhaDeQueijo(Double empadinhaDeQueijo) {
+        this.empadinhaDeQueijo = empadinhaDeQueijo;
     }
 
     public Double getCoxinha() {
@@ -145,9 +184,17 @@ public class ResultadoSalgado {
     public Double getPastel() {
         return pastel;
     }
-
+    
     public void setPastel(Double pastel) {
         this.pastel = pastel;
+    }
+    
+    public Double getPastelDeQueijo() {
+        return pastelDeQueijo;
+    }
+    
+    public void setPastelDeQueijo(Double pastelDeQueijo) {
+        this.pastelDeQueijo = pastelDeQueijo;
     }
 
     public Double getBolinhaDeQueijo() {
@@ -166,6 +213,14 @@ public class ResultadoSalgado {
         this.risoles = risoles;
     }
 
+    public Double getCigaretteDeQueijo() {
+        return cigaretteDeQueijo;
+    }
+
+    public void setCigaretteDeQueijo(Double cigaretteDeQueijo) {
+        this.cigaretteDeQueijo = cigaretteDeQueijo;
+    }
+
     public Double getCigarette() {
         return cigarette;
     }
@@ -173,7 +228,7 @@ public class ResultadoSalgado {
     public void setCigarette(Double cigarette) {
         this.cigarette = cigarette;
     }
-
+    
     public Double getCroquete() {
         return croquete;
     }
