@@ -5,17 +5,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.*;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+
 
 import feastplannerecalc.config.MainWindowConfig;
+import feastplannerecalc.database.HibernateUtil;
+import feastplannerecalc.model.ComidaTipo;
+import feastplannerecalc.model.ResultadoSimulacao;
+import feastplannerecalc.models.SimulacaoSalgado;
+import jakarta.transaction.Transaction;
 
 
 public class SimulacaoBebidas extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainWindow; // Referência à MainWindow
+	private SimulacaoSalgado simulacao;
 
-	public SimulacaoBebidas(MainWindow mainWindow) {
-        this.mainWindow = mainWindow; // Armazena a referência 
-        
+	public SimulacaoBebidas(MainWindow mainWindow, SimulacaoSalgado simulacao) {
+        this.mainWindow = mainWindow; // Armazena a referência à janela principal
+        this.simulacao = simulacao;   // Armazena a referência à simulação
+
         // Painel "mãe" que vai conter todos os componentes
         setLayout(new BorderLayout()); // Usaremos BorderLayout para estruturar os componentes principais
         JPanel simulacaoPanel = new JPanel(new BorderLayout());
@@ -89,17 +99,50 @@ public class SimulacaoBebidas extends JPanel {
 
 
 
-	     // Botão Simular: lógica para exibir o painel de Simulação de Salgado
+	     // Botão Simular: lógica para salvar os dados no banco
 	        simularButton.addActionListener(new ActionListener() {
 	            @Override
 	            public void actionPerformed(ActionEvent e) {
-	                // Aqui você pode adicionar a lógica para salvar os dados no banco
-	                System.out.println("Simulação finalizada. Dados enviados para o banco.");
+	                // Aqui vamos criar uma instância de ResultadoSimulacao e preencher os dados
+	                ResultadoSimulacao resultadoSimulacao = new ResultadoSimulacao();
+
+	                // Preenche os dados do objeto simulacao para o banco de dados
+	                resultadoSimulacao.setQuantidadeHomens(simulacao.getHomens());
+	                resultadoSimulacao.setQuantidadeMulheres(simulacao.getMulheres());
+	                resultadoSimulacao.setQuantidadeCriancas(simulacao.getCriancas());
+	                resultadoSimulacao.setQuantidadeComiloes(simulacao.getComiloes());
+	                resultadoSimulacao.setQuantidadeNaoComemCarne(simulacao.getVegetarianos());
+	                
+	                // Defina o tipo de comida (por exemplo, Salgado) para a simulação atual
+	                ComidaTipo tipoComida = new ComidaTipo(); // Assumindo que você tenha uma lógica para definir o tipo
+	                tipoComida.setId(2L); // chave estrangeira do tipo de construção
+	                resultadoSimulacao.setTipoComida(tipoComida);
+
+
+
+	                // Envia os dados para o banco de dados usando Jakarta Persistence
+	                try {
+	                    EntityManager entityManager = HibernateUtil.getSessionFactory().createEntityManager(); // Obtém o EntityManager
+	                    EntityTransaction transaction = entityManager.getTransaction(); // Obtém a transação
+
+	                    transaction.begin(); // Inicia a transação
+
+	                    entityManager.persist(resultadoSimulacao); // Salva o resultado da simulação no banco
+
+	                    transaction.commit(); // Confirma a transação
+	                    System.out.println("Simulação salva com sucesso no banco de dados.");
+	                    
+	                    entityManager.close(); // Fecha o EntityManager
+	                } catch (Exception ex) {
+	                    ex.printStackTrace();
+	                    System.out.println("Erro ao salvar a simulação no banco: " + ex.getMessage());
+	                }
 
 	                // Trocar para o painel de resultado da simulação de Salgado
 	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow).getPanel());
 	            }
 	        });
+
 
     }
 	public JPanel getPanel() {
