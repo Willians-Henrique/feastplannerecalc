@@ -154,7 +154,7 @@ public class DataInitializer {
             new Object[]{"Kibe", 2, 0, 2, false, 1.0},
             new Object[]{"Pastel", 2, 0, 2, true, 1.0},
             new Object[]{"Bolinha de Queijo", 2, 0, 2, true, 1.0},
-            new Object[]{"Risóles", 2, 0, 2, true, 1.0},
+            new Object[]{"Risóles", 2, 0, 2, false, 1.0},
             new Object[]{"Cigarette", 2, 0, 2, true, 1.0},
             new Object[]{"Croquete", 2, 0, 2, false, 1.0},
             new Object[]{"Costela Bovina", 1, 1, 0, false, 0.5},
