@@ -3,15 +3,52 @@ package feastplannerecalc.views;
 import javax.swing.*;
 
 import feastplannerecalc.config.MainWindowConfig;
+import feastplannerecalc.models.SimulacaoChurrasco;
+import feastplannerecalc.models.SimulacaoSalgado;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NovaSimulacaoSalgados extends JPanel {
 	
     private static final long serialVersionUID = 1L;
     private MainWindow mainWindow; // Referência à MainWindow
+    
+    // JTextFields para capturar os dados das pessoas
+    private JTextField homensTextField;
+    private JTextField mulheresTextField;
+    private JTextField comiloesTextField;
+    private JTextField criancasTextField;
+    private JTextField vegetarianosTextField;
+
+  //JCheckBoxes para capturar as opcoes de agregados
+    private JCheckBox arrozCheckbox;
+    private JCheckBox farofaCheckBox;
+    private JCheckBox vinagreteCheckBox;
+    private JCheckBox paodeAlhoCheckBox;
+    private JCheckBox paoFrancesCheckBox;
+    private JCheckBox queijoCoalhoCheckBox;
+    
+    // JCheckBoxes para capturar as opções de salgados
+    private JCheckBox pizzaCheckBox;
+    private JCheckBox esfirraCheckBox;
+    private JCheckBox hamburgerCheckBox;
+    private JCheckBox empadinhaCheckBox;
+    private JCheckBox pizzaDeQueijoCheckBox;
+    private JCheckBox esfirraDeQueijoCheckBox;
+    private JCheckBox empadinhaDeQueijoCheckBox;
+    private JCheckBox coxinhaCheckBox;
+    private JCheckBox kibeCheckBox;
+    private JCheckBox pastelCheckBox;
+    private JCheckBox risolesCheckBox;
+    private JCheckBox cigarreteCheckBox;
+    private JCheckBox croqueteCheckBox;
+    private JCheckBox pastelDeQueijoCheckBox;
+    private JCheckBox bolinhaDeQueijoCheckBox;
+    private JCheckBox cigarreteDeQueijoCheckBox;
 
     public NovaSimulacaoSalgados(MainWindow mainWindow) {
         this.mainWindow = mainWindow; // Armazena a referência
@@ -46,36 +83,49 @@ public class NovaSimulacaoSalgados extends JPanel {
 
         gbcPessoas.gridy = 1;
         gbcPessoas.gridx = 0;
-        pessoasPanel.add(new JTextField(10), gbcPessoas);
+        // Inicializando homensTextField
+        this.homensTextField = new JTextField(10);
+        pessoasPanel.add(this.homensTextField, gbcPessoas);
+
         gbcPessoas.gridx = 1;
-        pessoasPanel.add(new JTextField(10), gbcPessoas);
+        // Inicializando mulheresTextField
+        this.mulheresTextField = new JTextField(10);
+        pessoasPanel.add(this.mulheresTextField, gbcPessoas);
 
         // Segunda Linha: Comilões / Crianças
-        gbcPessoas.gridy = 2;
+        gbcPessoas.gridy = 2; // Linha 2
         gbcPessoas.gridx = 0;
         pessoasPanel.add(new JLabel("Comilões:"), gbcPessoas);
         gbcPessoas.gridx = 1;
         pessoasPanel.add(new JLabel("Crianças:"), gbcPessoas);
 
-        gbcPessoas.gridy = 3;
+        gbcPessoas.gridy = 3; // Linha 3
         gbcPessoas.gridx = 0;
-        pessoasPanel.add(new JTextField(10), gbcPessoas);
+        // Inicializando comilõesTextField
+        this.comiloesTextField = new JTextField(10);
+        pessoasPanel.add(this.comiloesTextField, gbcPessoas);
+
         gbcPessoas.gridx = 1;
-        pessoasPanel.add(new JTextField(10), gbcPessoas);
+        // Inicializando criancasTextField
+        this.criancasTextField = new JTextField(10);
+        pessoasPanel.add(this.criancasTextField, gbcPessoas);
+
 
         // Terceira Linha: Pessoas que Não Comem Carne
-        gbcPessoas.gridy = 4;
+        gbcPessoas.gridy = 4; // Linha 4
         gbcPessoas.gridx = 0;
         gbcPessoas.gridwidth = 2;
         gbcPessoas.insets = new Insets(10, 10, 10, 10); // Adiciona espaço extra
         JLabel vegetarianosLabel = new JLabel("<html>Quantidade de Pessoas<br>que Não Comem Carne:</html>");
         pessoasPanel.add(vegetarianosLabel, gbcPessoas);
 
-        gbcPessoas.gridy = 5;
+        gbcPessoas.gridy = 5; // Linha 5
         gbcPessoas.gridx = 0;
         gbcPessoas.gridwidth = 2;
         gbcPessoas.fill = GridBagConstraints.HORIZONTAL;
-        pessoasPanel.add(new JTextField(3), gbcPessoas);
+        // Inicializando vegetarianosTextField
+        this.vegetarianosTextField = new JTextField(3);
+        pessoasPanel.add(this.vegetarianosTextField, gbcPessoas);
 
         // Parte inferior: Agregados
         JPanel agregadosPanel = new JPanel(new GridBagLayout());
@@ -87,13 +137,23 @@ public class NovaSimulacaoSalgados extends JPanel {
         gbcAgregados.anchor = GridBagConstraints.WEST;
 
         // Adiciona checkboxes para agregados
-        agregadosPanel.add(new JCheckBox("Arroz"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Farofa"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Vinagrete"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Coração de frango"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Pão de alho"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Pão francês"), gbcAgregados);
-        agregadosPanel.add(new JCheckBox("Queijo Coalho"), gbcAgregados);
+        this.arrozCheckbox = new JCheckBox("Arroz");
+        agregadosPanel.add(this.arrozCheckbox, gbcAgregados);
+
+        this.farofaCheckBox = new JCheckBox("Farofa");
+        agregadosPanel.add(this.farofaCheckBox, gbcAgregados);
+
+        this.vinagreteCheckBox = new JCheckBox("Vinagrete");
+        agregadosPanel.add(this.vinagreteCheckBox, gbcAgregados);
+
+        this.paodeAlhoCheckBox = new JCheckBox("Pão de Alho");
+        agregadosPanel.add(this.paodeAlhoCheckBox, gbcAgregados);
+
+        this.paoFrancesCheckBox = new JCheckBox("Pão Francês");
+        agregadosPanel.add(this.paoFrancesCheckBox, gbcAgregados);
+
+        this.queijoCoalhoCheckBox = new JCheckBox("Queijo Coalho");
+        agregadosPanel.add(this.queijoCoalhoCheckBox, gbcAgregados);
 
         // Adiciona as duas seções ao painel esquerdo
         leftPanel.add(pessoasPanel);  // Parte superior
@@ -115,11 +175,16 @@ public class NovaSimulacaoSalgados extends JPanel {
         gbcAssados.gridy = GridBagConstraints.RELATIVE;
         gbcAssados.anchor = GridBagConstraints.WEST;
 
-        assadosPanel.add(new JCheckBox("Pizza"), gbcAssados);
-        assadosPanel.add(new JCheckBox("Esfirra"), gbcAssados);
-        assadosPanel.add(new JCheckBox("Hamburger"), gbcAssados);
-        assadosPanel.add(new JCheckBox("Empadinha"), gbcAssados);
-
+        this.pizzaCheckBox = new JCheckBox("Pizza");
+        assadosPanel.add(this.pizzaCheckBox, gbcAssados );
+        this.esfirraCheckBox = new JCheckBox("Esfirra");
+        assadosPanel.add(this.esfirraCheckBox, gbcAssados);
+        this.hamburgerCheckBox = new JCheckBox("Hamburger");
+        assadosPanel.add( this.hamburgerCheckBox, gbcAssados);
+        this.empadinhaCheckBox = new JCheckBox("Empadinha");
+        assadosPanel.add( this.empadinhaCheckBox, gbcAssados);
+               
+        
         JPanel assadosSemCarnePanel = new JPanel(new GridBagLayout());
         assadosSemCarnePanel.setBorder(BorderFactory.createTitledBorder("Sem Carne"));
         GridBagConstraints gbcAssadosSemCarne = new GridBagConstraints();
@@ -128,9 +193,12 @@ public class NovaSimulacaoSalgados extends JPanel {
         gbcAssadosSemCarne.gridy = GridBagConstraints.RELATIVE;
         gbcAssadosSemCarne.anchor = GridBagConstraints.WEST;
 
-        assadosSemCarnePanel.add(new JCheckBox("Pizza"), gbcAssadosSemCarne);
-        assadosSemCarnePanel.add(new JCheckBox("Esfirra"), gbcAssadosSemCarne);
-        assadosSemCarnePanel.add(new JCheckBox("Empadinha"), gbcAssadosSemCarne);
+        this.pizzaDeQueijoCheckBox = new JCheckBox("Pizza De Queijo");
+        assadosSemCarnePanel.add(this.pizzaDeQueijoCheckBox, gbcAssadosSemCarne);
+        this.esfirraDeQueijoCheckBox = new JCheckBox("Esfirra de Queijo");
+        assadosSemCarnePanel.add( this.esfirraDeQueijoCheckBox, gbcAssadosSemCarne);
+        this.empadinhaDeQueijoCheckBox = new JCheckBox("Empadinha de Queijo");
+        assadosSemCarnePanel.add( this.empadinhaDeQueijoCheckBox, gbcAssadosSemCarne);
 
         middlePanel.add(assadosPanel);
         middlePanel.add(assadosSemCarnePanel);
@@ -151,12 +219,19 @@ public class NovaSimulacaoSalgados extends JPanel {
         gbcFritos.gridy = GridBagConstraints.RELATIVE;
         gbcFritos.anchor = GridBagConstraints.WEST;
 
-        fritosPanel.add(new JCheckBox("Coxinha"), gbcFritos);
-        fritosPanel.add(new JCheckBox("Kibe"), gbcFritos);
-        fritosPanel.add(new JCheckBox("Pastel"), gbcFritos);
-        fritosPanel.add(new JCheckBox("Risóles"), gbcFritos);
-        fritosPanel.add(new JCheckBox("Cigarrete"), gbcFritos);
-        fritosPanel.add(new JCheckBox("Croquete"), gbcFritos);
+        this.coxinhaCheckBox = new JCheckBox("Coxinha");
+        fritosPanel.add(this.coxinhaCheckBox, gbcFritos );
+        this.kibeCheckBox = new JCheckBox("Kibe");
+        fritosPanel.add(this.kibeCheckBox, gbcFritos);
+        this.pastelCheckBox = new JCheckBox("Pastel");
+        fritosPanel.add( this.pastelCheckBox, gbcFritos);
+        this.risolesCheckBox = new JCheckBox("Risóles");
+        fritosPanel.add( this.risolesCheckBox, gbcFritos);
+        this.cigarreteCheckBox = new JCheckBox("Cigarrete");
+        fritosPanel.add( this.cigarreteCheckBox, gbcFritos);
+        this.croqueteCheckBox = new JCheckBox("Croquete");
+        fritosPanel.add( this.croqueteCheckBox, gbcFritos);
+        
 
         JPanel fritosSemCarnePanel = new JPanel(new GridBagLayout());
         fritosSemCarnePanel.setBorder(BorderFactory.createTitledBorder("Sem Carne"));
@@ -166,10 +241,12 @@ public class NovaSimulacaoSalgados extends JPanel {
         gbcFritosSemCarne.gridy = GridBagConstraints.RELATIVE;
         gbcFritosSemCarne.anchor = GridBagConstraints.WEST;
 
-        fritosSemCarnePanel.add(new JCheckBox("Pastel"), gbcFritosSemCarne);
-        fritosSemCarnePanel.add(new JCheckBox("Bolinha de Queijo"), gbcFritosSemCarne);
-        fritosSemCarnePanel.add(new JCheckBox("Risóles"), gbcFritosSemCarne);
-        fritosSemCarnePanel.add(new JCheckBox("Cigarrete"), gbcFritosSemCarne);
+        this.pastelDeQueijoCheckBox = new JCheckBox("Pastel de Queijo");
+        fritosSemCarnePanel.add( this.pastelDeQueijoCheckBox, gbcFritosSemCarne);
+        this.bolinhaDeQueijoCheckBox = new JCheckBox("Bolinha de Queijo");
+        fritosSemCarnePanel.add( this.bolinhaDeQueijoCheckBox, gbcFritosSemCarne);
+        this.cigarreteDeQueijoCheckBox = new JCheckBox("Cigarrete de Queijo");
+        fritosSemCarnePanel.add( this.cigarreteDeQueijoCheckBox, gbcFritosSemCarne);
 
         rightPanel.add(fritosPanel);
         rightPanel.add(fritosSemCarnePanel);
@@ -187,7 +264,79 @@ public class NovaSimulacaoSalgados extends JPanel {
         avancarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                mainWindow.showPanel(new SimulacaoBebidas(mainWindow));
+            	
+            	// Cria a instância da SimulacaoChurrasco e armazena os dados
+    	        SimulacaoSalgado simulacao = new SimulacaoSalgado();
+    	        // Captura os dados dos JTextFields
+    	        try {
+    	            simulacao.setHomens(Integer.parseInt(homensTextField.getText()));
+    	            simulacao.setMulheres(Integer.parseInt(mulheresTextField.getText()));
+    	            simulacao.setComiloes(Integer.parseInt(comiloesTextField.getText()));
+    	            simulacao.setCriancas(Integer.parseInt(criancasTextField.getText()));
+    	            simulacao.setVegetarianos(Integer.parseInt(vegetarianosTextField.getText()));
+    	        } catch (NumberFormatException ex) {
+    	            System.out.println("Erro ao converter número: " + ex.getMessage());
+    	        }
+
+    	        // Adicionar carnes selecionadas
+    	        List<String> salgadosAssados = new ArrayList<>();
+    	        if (pizzaCheckBox.isSelected()) salgadosAssados.add("Pizza");
+    	        if (esfirraCheckBox.isSelected()) salgadosAssados.add("Esfirra");
+    	        if (hamburgerCheckBox.isSelected()) salgadosAssados.add("Hambúrguer");
+    	        if (empadinhaCheckBox.isSelected()) salgadosAssados.add("Empadinha");
+    	        if (pizzaDeQueijoCheckBox.isSelected()) salgadosAssados.add("Pizza de Queijo");
+    	        if (esfirraDeQueijoCheckBox.isSelected()) salgadosAssados.add("Esfirra de Queijo");
+    	        if (empadinhaDeQueijoCheckBox.isSelected()) salgadosAssados.add("Empadinha de Queijo");
+    	        
+    	        simulacao.setSalgadosAssados(salgadosAssados);
+
+    	        List<String> salgadosFritos = new ArrayList<>();
+    	        if (coxinhaCheckBox.isSelected()) salgadosFritos.add("Coxinha");
+    	        if (kibeCheckBox.isSelected()) salgadosFritos.add("Kibe");
+    	        if (pastelCheckBox.isSelected()) salgadosFritos.add("Pastel");
+    	        if (risolesCheckBox.isSelected()) salgadosFritos.add("Risóles");
+    	        if (cigarreteCheckBox.isSelected()) salgadosFritos.add("Cigarrete");
+    	        if (croqueteCheckBox.isSelected()) salgadosFritos.add("Croquete");
+    	        if (pastelDeQueijoCheckBox.isSelected()) salgadosFritos.add("Pastel de Queijo");
+    	        if (bolinhaDeQueijoCheckBox.isSelected()) salgadosFritos.add("Bolinha de Queijo");
+    	        if (cigarreteDeQueijoCheckBox.isSelected()) salgadosFritos.add("Cigarrete de Queijo");
+    	        
+    	        
+    	        simulacao.setSalgadosFritos(salgadosFritos);
+    	     
+    	        List<String> agregados = new ArrayList<>();
+    	        if (arrozCheckbox.isSelected()) agregados.add("Arroz");
+    	        if (farofaCheckBox.isSelected()) agregados.add("Farofa");
+    	        if (vinagreteCheckBox.isSelected()) agregados.add("Vinagrete");
+    	        if (paodeAlhoCheckBox.isSelected()) agregados.add("Pão de Alho");
+    	        if (paoFrancesCheckBox.isSelected()) agregados.add("Pão Francês");
+    	        if (queijoCoalhoCheckBox.isSelected()) agregados.add("Queijo Coalho");
+    	        
+    	        simulacao.setAgregados(agregados);
+    	        
+    	        // Exibir os valores capturados no console
+    	        System.out.println("Homens: " + simulacao.getHomens());
+    	        System.out.println("Mulheres: " + simulacao.getMulheres());
+    	        System.out.println("Comilões: " + simulacao.getComiloes());
+    	        System.out.println("Crianças: " + simulacao.getCriancas());
+    	        System.out.println("Vegetarianos: " + simulacao.getVegetarianos());
+
+    	        System.out.println("Salgados Selecionadas:");
+    	        for (String salgado : salgadosAssados) {
+    	            System.out.println(salgado);
+    	        }
+    	        for (String salgadofrito : salgadosFritos) {
+    	            System.out.println(salgadofrito);
+    	        }
+    	        for (String agregs : agregados) {
+    	            System.out.println(agregs);
+    	        }
+    	        
+
+            	
+            	// Aqui você pode passar o objeto "simulacao" para a próxima tela ou armazená-lo em uma estrutura de dados apropriada
+    	        mainWindow.showPanel(new SimulacaoBebidas(mainWindow, simulacao));
+
             }
         });
 	     // Botão Cancelar: retorna para a tela inicial
