@@ -53,12 +53,6 @@ public class MainWindow extends JFrame {
         mainPanel.repaint();
     }
 
-    // Mostra o painel de simulação de bebidas
-    public void showSimulacaoBebidas() {
-        SimulacaoBebidas bebidasPanel = new SimulacaoBebidas(this);
-        showPanel(bebidasPanel);
-    }
-
     // Função para outras classes voltarem à home
     public void goToHome() {
         showPanel(new MainWindowConfig().getMainPanel());
