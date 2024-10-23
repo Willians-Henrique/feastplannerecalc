@@ -50,6 +50,7 @@ public class NovaSimulacaoChurrasco extends JPanel {
     private JCheckBox fileMignonCheckBox;
     private JCheckBox picanhaSuinaCheckBox;
     private JCheckBox lomboSuinoCheckBox;
+    private JCheckBox linguicaCheckBox;
     private JCheckBox paletaCheckBox;
    
 
@@ -265,6 +266,8 @@ public class NovaSimulacaoChurrasco extends JPanel {
         suinosSemOssoPanel.add(this.picanhaSuinaCheckBox, gbcSuinosSemOsso);
         this.lomboSuinoCheckBox = new JCheckBox("Lombo Suíno");
         suinosSemOssoPanel.add(this.lomboSuinoCheckBox, gbcSuinosSemOsso);
+        this.linguicaCheckBox = new JCheckBox("Linguiça");
+        suinosSemOssoPanel.add(this.linguicaCheckBox, gbcSuinosSemOsso);
         this.paletaCheckBox = new JCheckBox("Paleta");
         suinosSemOssoPanel.add(this.paletaCheckBox, gbcSuinosSemOsso);
 
@@ -321,6 +324,7 @@ public class NovaSimulacaoChurrasco extends JPanel {
             	        if (fileMignonCheckBox.isSelected()) carnesSemOsso.add("Filé Mignon");
             	        if (picanhaSuinaCheckBox.isSelected()) carnesSemOsso.add("Picanha Suína");
             	        if (lomboSuinoCheckBox.isSelected()) carnesSemOsso.add("Lombo Suíno");
+            	        if (linguicaCheckBox.isSelected()) carnesSemOsso.add("Linguiça");
             	        if (paletaCheckBox.isSelected()) carnesSemOsso.add("Paleta");
             	        
             	        simulacao.setCarnesSemOsso(carnesSemOsso);
