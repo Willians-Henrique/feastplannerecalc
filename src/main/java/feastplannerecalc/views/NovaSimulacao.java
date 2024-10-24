@@ -79,14 +79,14 @@ public class NovaSimulacao extends JPanel {
         rightPanel.add(churrascoLabel, gbcRight);
         
         // Adiciona ação de clique para o botão de "Churrasco"
-        churrascoButton.addActionListener(e -> {
+        churrascoButton.addActionListener(e -> {        		
         // Obtém a instância da janela principal e troca para a nova view
         JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
         if (topFrame instanceof MainWindow) {
              ((MainWindow) topFrame).showPanel(new NovaSimulacaoChurrasco((MainWindow) topFrame));
           }
         });
-
+        
         // Adiciona os dois painéis ao painel principal
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
         mainPanel.add(leftPanel);

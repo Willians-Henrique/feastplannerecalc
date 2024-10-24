@@ -1,6 +1,13 @@
 package feastplannerecalc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import feastplannerecalc.database.HibernateUtil;
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import jakarta.persistence.EntityManager;
 
 /**
  * Classe que representa a quantidade padrão de comida consumida por diferentes
@@ -117,4 +124,32 @@ public class ComidaQuantidadePadrao {
     public void setQuantidadeSalgado(Integer quantidadeSalgado) {
         this.quantidadeSalgado = quantidadeSalgado;
     }
+    
+    public static List<ComidaQuantidadePadrao> carregarQuantidadeCarnePorPessoa() {
+        List<ComidaQuantidadePadrao> listaQuantidades = new ArrayList<>(); // Inicializa a lista
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaQuantidades = session.createQuery("FROM ComidaQuantidadePadrao", ComidaQuantidadePadrao.class).list();
+            transaction.commit();
+            
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return listaQuantidades; // Retorna a lista
+    }
+    @Override
+    public String toString() {
+        return quantidadeCarne != null ? quantidadeCarne.toString() : "Sem valor";
+    }
+
+
 }

@@ -2,6 +2,8 @@ package feastplannerecalc.models;
 
 import java.util.List;
 
+import feastplannerecalc.model.ComidaQuantidadePadrao;
+
 public class SimulacaoChurrasco {
 
     private int homens;
@@ -81,5 +83,46 @@ public class SimulacaoChurrasco {
         this.agregados = agregados;
     }
     
-    
+    public void calcularQuantidadeTotalComida(List<ComidaQuantidadePadrao> listaQuantidades) {
+        // Obtém a quantidade de carne por tipo de pessoa
+        double quantidadeCarneHomem = 0;
+        double quantidadeCarneMulher = 0;
+        double quantidadeCarneComilao = 0;
+        double quantidadeCarneCrianca = 0;
+
+        // Itera sobre a lista de quantidades padrão para encontrar as categorias
+        for (ComidaQuantidadePadrao quantidade : listaQuantidades) {
+            switch (quantidade.getPessoasCategoria().getCategoria().toLowerCase()) {
+                case "homem":
+                    quantidadeCarneHomem = quantidade.getQuantidadeCarne();
+                    break;
+                case "mulher":
+                    quantidadeCarneMulher = quantidade.getQuantidadeCarne();
+                    break;
+                case "comilão":
+                    quantidadeCarneComilao = quantidade.getQuantidadeCarne();
+                    break;
+                case "criança":
+                    quantidadeCarneCrianca = quantidade.getQuantidadeCarne();
+                    break;
+            }
+        }
+
+        // Multiplicar a quantidade de carne por número de pessoas de cada categoria
+        double totalCarneHomem = quantidadeCarneHomem * getHomens();
+        double totalCarneMulher = quantidadeCarneMulher * getMulheres();
+        double totalCarneComilao = quantidadeCarneComilao * getComiloes();
+        double totalCarneCrianca = quantidadeCarneCrianca * getCriancas();
+        double totalCarnes = (totalCarneCrianca+totalCarneComilao+totalCarneMulher+totalCarneHomem);
+
+        // Imprimir os resultados no console
+        System.out.println("Total de Carne para Homens: " + totalCarneHomem + " kg");
+        System.out.println("Total de Carne para Mulheres: " + totalCarneMulher + " kg");
+        System.out.println("Total de Carne para Comilões: " + totalCarneComilao + " kg");
+        System.out.println("Total de Carne para Crianças: " + totalCarneCrianca + " kg");
+        System.out.println("Total de Carne geral: " + totalCarnes + " kg");
+        
+    }
+
+
 }

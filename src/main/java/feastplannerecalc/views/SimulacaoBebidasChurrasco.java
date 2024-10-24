@@ -6,12 +6,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import java.util.List;
 import feastplannerecalc.config.MainWindowConfig;
 import feastplannerecalc.database.HibernateUtil;
+import feastplannerecalc.model.ComidaQuantidadePadrao;
 import feastplannerecalc.model.ComidaTipo;
 import feastplannerecalc.model.ResultadoSimulacao;
 import feastplannerecalc.models.SimulacaoChurrasco;
-import feastplannerecalc.models.SimulacaoSalgado;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
@@ -19,7 +20,11 @@ import jakarta.persistence.EntityTransaction;
 public class SimulacaoBebidasChurrasco extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainWindow; // Referência à MainWindow
-	private SimulacaoSalgado simulacao;
+	private SimulacaoChurrasco simulacao;
+
+    // Adiciona a variável de lista como campo da classe
+    private List<ComidaQuantidadePadrao> listaQuantidades;
+    
 
 	public SimulacaoBebidasChurrasco(MainWindow mainWindow, SimulacaoChurrasco simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência 
@@ -102,6 +107,17 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	            public void actionPerformed(ActionEvent e) {
 	                // Aqui vamos criar uma instância de ResultadoSimulacao e preencher os dados
 	                ResultadoSimulacao resultadoSimulacao = new ResultadoSimulacao();
+	                
+	             // Carrega a lista de quantidades de comida padrão
+	                listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeCarnePorPessoa();
+	                
+	                System.out.println("Lista de Quantidade de Comida Padrão:");
+	                for (ComidaQuantidadePadrao comida : listaQuantidades) {
+	                    System.out.println(comida); // Agora imprimirá apenas os valores de quantidade_carne
+	                }
+	                
+	                // Calcula e imprime a quantidade total de comida para cada categoria de pessoa
+	                simulacao.calcularQuantidadeTotalComida(listaQuantidades);
 
 	                // Preenche os dados do objeto simulacao para o banco de dados
 	                resultadoSimulacao.setQuantidadeHomens(simulacao.getHomens());
@@ -114,8 +130,6 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	                ComidaTipo tipoComida = new ComidaTipo(); // Assumindo que você tenha uma lógica para definir o tipo
 	                tipoComida.setId(1L); // chave estrangeira do tipo de construção
 	                resultadoSimulacao.setTipoComida(tipoComida);
-
-
 
 	                // Envia os dados para o banco de dados usando Jakarta Persistence
 	                try {
@@ -141,6 +155,13 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	        });
 
     }
+	
+	 // Getter para acessar a lista em outra parte do código, se necessário
+    public List<ComidaQuantidadePadrao> getListaQuantidades() {
+        return listaQuantidades;
+    }
+    
+    
 	public JPanel getPanel() {
         return this; // Retorna o painel para exibição
     }
