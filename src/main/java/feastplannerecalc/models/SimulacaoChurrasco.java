@@ -12,8 +12,11 @@ public class SimulacaoChurrasco {
     private int criancas;
     private int vegetarianos;
     
-    private List<String> carnesComOsso;
-    private List<String> carnesSemOsso;
+    private List<String> bovinoComOsso;
+    private List<String> bovinoSemOsso;
+    private List<String> suinoComOsso;
+    private List<String> suinoSemOsso;
+    private List<String> frangoComOsso;
     private List<String> agregados;
 
     // Construtores, getters e setters
@@ -59,26 +62,50 @@ public class SimulacaoChurrasco {
         this.vegetarianos = vegetarianos;
     }
 
-    public List<String> getCarnesComOsso() {
-        return carnesComOsso;
+    public List<String> getBovinoComOsso() {
+        return bovinoComOsso;
     }
 
-    public void setCarnesComOsso(List<String> carnesComOsso) {
-        this.carnesComOsso = carnesComOsso;
+    public void setBovinoComOsso(List<String> bovinoComOsso) {
+        this.bovinoComOsso = bovinoComOsso;
     }
 
-    public List<String> getCarnesSemOsso() {
-        return carnesSemOsso;
+    public List<String> getBovinoSemOsso() {
+        return bovinoSemOsso;
     }
 
-    public void setCarnesSemOsso(List<String> carnesSemOsso) {
-        this.carnesSemOsso = carnesSemOsso;
+    public void setBovinoSemOsso(List<String> bovinoSemOsso) {
+        this.bovinoSemOsso = bovinoSemOsso;
+    }
+    
+    public List<String> getSuinoComOsso() {
+        return suinoComOsso;
+    }
+
+    public void setSuinoComOsso(List<String> suinoComOsso) {
+        this.suinoComOsso = suinoComOsso;
+    }
+    
+    public List<String> getSuinoSemOsso() {
+        return suinoSemOsso;
+    }
+
+    public void setSuinoSemOsso(List<String> suinoSemOsso) {
+        this.suinoSemOsso = suinoSemOsso;
+    }
+    
+    public List<String> getFrangoComOsso() {
+        return frangoComOsso;
+    }
+
+    public void setFrangoComOsso(List<String> frangoComOsso) {
+        this.frangoComOsso = frangoComOsso;
     }
     
     public List<String> getAgregados() {
         return agregados;
     }
-
+    
     public void setAgregados(List<String> agregados) {
         this.agregados = agregados;
     }

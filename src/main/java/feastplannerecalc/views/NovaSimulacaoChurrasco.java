@@ -302,32 +302,39 @@ public class NovaSimulacaoChurrasco extends JPanel {
             	        }
 
             	        // Adicionar carnes selecionadas
-            	        List<String> carnesComOsso = new ArrayList<>();
-            	        if (costelaBovinaCheckBox.isSelected()) carnesComOsso.add("Costela Bovina");
-            	        if (primeRibCheckBox.isSelected()) carnesComOsso.add("Prime Rib");
-            	        if (chuletaPaulistaCheckBox.isSelected()) carnesComOsso.add("Chuleta Paulista");
-            	        if (costelaSuinaCheckBox.isSelected()) carnesComOsso.add("Costela Suína");
-            	        if (bistecaCheckBox.isSelected()) carnesComOsso.add("Bisteca Suína");
-            	        if (pernilcomOssoCheckBox.isSelected()) carnesComOsso.add("Pernil Com Osso");
-            	        if (asinhacomCoxinhaCheckBox.isSelected()) carnesComOsso.add("Asinha com Coxinha");
-            	        if (tulipadaAsaCheckBox.isSelected()) carnesComOsso.add("Tulipa da Asa");
-            	        if (coxacomSobrecoxaCheckBox.isSelected()) carnesComOsso.add("Coxa com Sobre Coxa");
+            	        List<String> bovinoComOsso = new ArrayList<>();
+            	        if (costelaBovinaCheckBox.isSelected()) bovinoComOsso.add("Costela Bovina");
+            	        if (primeRibCheckBox.isSelected()) bovinoComOsso.add("Prime Rib");
+            	        if (chuletaPaulistaCheckBox.isSelected()) bovinoComOsso.add("Chuleta Paulista");
+            	        simulacao.setBovinoComOsso(bovinoComOsso);
             	        
-            	        simulacao.setCarnesComOsso(carnesComOsso);
+            	        List<String> suinoComOsso = new ArrayList<>();
+            	        if (costelaSuinaCheckBox.isSelected()) suinoComOsso.add("Costela Suína");
+            	        if (bistecaCheckBox.isSelected()) suinoComOsso.add("Bisteca Suína");
+            	        if (pernilcomOssoCheckBox.isSelected()) suinoComOsso.add("Pernil Com Osso");
+            	        simulacao.setSuinoComOsso(suinoComOsso);
+            	        
+            	        List<String> frangoComOsso = new ArrayList<>();
+            	        if (asinhacomCoxinhaCheckBox.isSelected()) frangoComOsso.add("Asinha com Coxinha");
+            	        if (tulipadaAsaCheckBox.isSelected()) frangoComOsso.add("Tulipa da Asa");
+            	        if (coxacomSobrecoxaCheckBox.isSelected()) frangoComOsso.add("Coxa com Sobre Coxa");
+            	        simulacao.setFrangoComOsso(frangoComOsso);
 
-            	        List<String> carnesSemOsso = new ArrayList<>();
-            	        if (picanhaCheckBox.isSelected()) carnesSemOsso.add("Picanha");
-            	        if (coxaoMoleCheckBox.isSelected()) carnesSemOsso.add("Coxão Mole");
-            	        if (alcatraCheckBox.isSelected()) carnesSemOsso.add("Alcatra");
-            	        if (fraldinhaCheckBox.isSelected()) carnesSemOsso.add("Fraldinha");
-            	        if (contraFileCheckBox.isSelected()) carnesSemOsso.add("Contra Filé");
-            	        if (fileMignonCheckBox.isSelected()) carnesSemOsso.add("Filé Mignon");
-            	        if (picanhaSuinaCheckBox.isSelected()) carnesSemOsso.add("Picanha Suína");
-            	        if (lomboSuinoCheckBox.isSelected()) carnesSemOsso.add("Lombo Suíno");
-            	        if (linguicaCheckBox.isSelected()) carnesSemOsso.add("Linguiça");
-            	        if (paletaCheckBox.isSelected()) carnesSemOsso.add("Paleta");
+            	        List<String> bovinoSemOsso = new ArrayList<>();
+            	        if (picanhaCheckBox.isSelected()) bovinoSemOsso.add("Picanha");
+            	        if (coxaoMoleCheckBox.isSelected()) bovinoSemOsso.add("Coxão Mole");
+            	        if (alcatraCheckBox.isSelected()) bovinoSemOsso.add("Alcatra");
+            	        if (fraldinhaCheckBox.isSelected()) bovinoSemOsso.add("Fraldinha");
+            	        if (contraFileCheckBox.isSelected()) bovinoSemOsso.add("Contra Filé");
+            	        simulacao.setBovinoSemOsso(bovinoSemOsso);
             	        
-            	        simulacao.setCarnesSemOsso(carnesSemOsso);
+            	        List<String> suinoSemOsso = new ArrayList<>();
+            	        if (fileMignonCheckBox.isSelected()) suinoSemOsso.add("Filé Mignon");
+            	        if (picanhaSuinaCheckBox.isSelected()) suinoSemOsso.add("Picanha Suína");
+            	        if (lomboSuinoCheckBox.isSelected()) suinoSemOsso.add("Lombo Suíno");
+            	        if (linguicaCheckBox.isSelected()) suinoSemOsso.add("Linguiça");
+            	        if (paletaCheckBox.isSelected()) suinoSemOsso.add("Paleta");
+            	        simulacao.setSuinoSemOsso(suinoSemOsso);
             	     
             	        List<String> agregados = new ArrayList<>();
             	        if (arrozCheckbox.isSelected()) agregados.add("Arroz");
@@ -348,11 +355,20 @@ public class NovaSimulacaoChurrasco extends JPanel {
             	        System.out.println("Vegetarianos: " + simulacao.getVegetarianos());
 
             	        System.out.println("Carnes Selecionadas:");
-            	        for (String carne : carnesComOsso) {
-            	            System.out.println(carne);
+            	        for (String bovinoOsso : bovinoComOsso) {
+            	            System.out.println(bovinoOsso);
             	        }
-            	        for (String carnesemosso : carnesSemOsso) {
-            	            System.out.println(carnesemosso);
+            	        for (String suinoOsso : suinoComOsso) {
+            	            System.out.println(suinoOsso);
+            	        }
+            	        for (String frango : frangoComOsso) {
+            	            System.out.println(frango);
+            	        }
+            	        for (String bovinoSem : bovinoSemOsso) {
+            	            System.out.println(bovinoSem);
+            	        }
+            	        for (String suinoSem : suinoSemOsso) {
+            	            System.out.println(suinoSem);
             	        }
             	        for (String agregs : agregados) {
             	            System.out.println(agregs);
