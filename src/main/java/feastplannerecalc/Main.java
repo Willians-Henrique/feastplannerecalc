@@ -16,15 +16,18 @@ import javax.swing.SwingUtilities;
 
 public class Main {
     /**
-     * The starting point of the program. This method is responsible for the 
-     * control of the functions at runtime.
-     * @param args Command line arguments.
+     * Método principal do programa. Ele é o ponto de entrada da aplicação, responsável por
+     * inicializar a conexão com o banco de dados, desativar logs indesejados, carregar dados
+     * iniciais e exibir a interface gráfica. O projeto é construído utilizando Maven, 
+     * com o banco de dados H2 e Hibernate como ORM para persistência de dados.
+     * 
+     * @param args Argumentos da linha de comando.
      */
     public static void main(String[] args) {
-        // Database Handler
+    	// Inicializa o banco de dados e as tabelas utilizando Hibernate
         HibernateUtil.Initialize();
 
-        // Disable Logging
+        // Desabilita o logging para evitar saídas indesejadas no console
         LoggerContext logContext = (LoggerContext) LogManager.getContext(false);
         Map<String, LoggerConfig> map = logContext.getConfiguration().getLoggers();
         for (String key : map.keySet()) {
@@ -32,18 +35,23 @@ public class Main {
             logger.setLevel(Level.OFF);
         }
         
-        // Open a Hibernate session
+     // Abre uma sessão Hibernate para interações com o banco de dados
         Session session = HibernateUtil.getSessionFactory().openSession();
 
-        // Call DataInitializer to populate initial data in the database
+        // Chama o inicializador de dados para popular o banco com dados iniciais
         DataInitializer.initializeData(session);
 
-        // Inicializa a interface gráfica (Swing)
+        /**
+         * Inicializa a interface gráfica utilizando Java Swing.
+         * O método {@code invokeLater} garante que a interface será criada
+         * na thread de despacho de eventos do Swing, mantendo o comportamento
+         * thread-safe.
+         */
     	SwingUtilities.invokeLater(() -> {
     		MainWindow frame = new MainWindow();
     		frame.setVisible(true);
     	});
-        // Print a message to confirm initialization
+    	// Imprime uma mensagem no console para confirmar a inicialização do banco de dados
         System.out.println("Database initialized successfully.");
     }
 }

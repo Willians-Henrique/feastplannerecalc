@@ -1,6 +1,12 @@
 package feastplannerecalc.model;
 
 import jakarta.persistence.*;
+	
+	/**
+	 * Classe que armazena o resultado da simulação de churrasco.
+	 * Armazena a quantidade de carnes, acompanhamentos e itens obrigatórios
+	 * necessários para o evento.
+	 */
 
 @Entity
 @Table(name = "resultado_churrasco")
@@ -9,11 +15,19 @@ public class ResultadoChurrasco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    /**
+     * Referência ao resultado geral da simulação, ligando o churrasco ao evento simulado.
+     */
+    
     @ManyToOne
     @JoinColumn(name = "id_simulacao", nullable = false)
     private ResultadoSimulacao simulacao;
-
+    
+    /**
+     * Quantidade de carnes  necessária, de acordo com as escolhas e o número de pessoas.
+     */
+    
     // Carnes
     @Column(name = "costela_bovina", nullable = false)
     private Double costelaBovina;

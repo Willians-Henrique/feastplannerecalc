@@ -11,24 +11,28 @@ import org.hibernate.service.ServiceRegistry;
 
 import feastplannerecalc.model.*;
 /**
- * This class is responsible for managing {@link org.hibernate.Hibernate}
- * sessions.
+ * Classe responsável por gerenciar as sessões do Hibernate. Essa classe 
+ * lida com a configuração e inicialização da conexão com o banco de dados,
+ * além de garantir que as tabelas sejam criadas e atualizadas conforme necessário.
  */
 public class HibernateUtil {
     private static SessionFactory sessionFactory;
 
     /**
-     * This function is responsible for creating sessions to be used in 
-     * transactions externally.
+     * Este método é responsável por configurar e fornecer uma fábrica de sessões 
+     * (SessionFactory) que será usada em transações externas. Ele utiliza o banco 
+     * de dados H2 e configura o Hibernate para gerar ou atualizar as tabelas 
+     * automaticamente.
      * 
-     * @return the sessionFactory static variable.
+     * @return {@code sessionFactory} A fábrica de sessões configurada, 
+     * pronta para uso.
      */
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
 
-                // Hibernate Settings
+             // Configurações do Hibernate
                 Properties settings = new Properties();
                 settings.put(Environment.SHOW_SQL, "true"); // Enable SQL logging
                 settings.put(Environment.FORMAT_SQL, "true");
@@ -39,7 +43,7 @@ public class HibernateUtil {
 
                 configuration.setProperties(settings);
 
-                // Add your test entity class here
+             // Adiciona as classes anotadas usadas pelo Hibernate
                 configuration.addAnnotatedClass(Bebida.class);
                 configuration.addAnnotatedClass(BebidaQuantidadePadrao.class);
                 configuration.addAnnotatedClass(BebidaTipo.class);
@@ -51,13 +55,13 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(Pessoa.class);
                 configuration.addAnnotatedClass(PessoaCategoria.class);
 
-                // Adicionando as novas classes para armazenar os resultados da simulação
+             // Adiciona as classes que armazenam os resultados das simulações
                 configuration.addAnnotatedClass(ResultadoSimulacao.class);
                 configuration.addAnnotatedClass(ResultadoChurrasco.class);
                 configuration.addAnnotatedClass(ResultadoSalgado.class);
 
 
-                // Registry
+             // Criação do registro de serviço
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
 
@@ -72,8 +76,9 @@ public class HibernateUtil {
     }
 
     /**
-     * This method is responsible for opening the very first session, making
-     * sure the database is properly created.
+     * Método responsável por inicializar a primeira sessão do Hibernate.
+     * Ele garante que o banco de dados esteja devidamente criado ao abrir 
+     * e fechar uma sessão de teste.
      */
     public static void Initialize() {
         Session session = HibernateUtil.getSessionFactory().openSession();

@@ -1,6 +1,12 @@
 package feastplannerecalc.model;
 
 import jakarta.persistence.*;
+	
+/**
+ * Classe que armazena o resultado da simulação de salgados.
+ * Contém a quantidade necessária de salgados e itens obrigatórios
+ * para o evento.
+ */
 
 @Entity
 @Table(name = "resultado_salgado")
@@ -9,11 +15,19 @@ public class ResultadoSalgado {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    
+    /**
+     * Referência ao resultado geral da simulação, ligando os salgados ao evento simulado.
+     */
+    
     @ManyToOne
     @JoinColumn(name = "id_simulacao", nullable = false)
     private ResultadoSimulacao simulacao;
-
+    
+    /**
+     * Quantidade de salgados  necessários, considerando as preferências e o número de pessoas.
+     */
+    
     // Salgados
     @Column(name = "pizza", nullable = false)
     private Double pizza;
