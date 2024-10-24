@@ -83,7 +83,7 @@ public class SimulacaoChurrasco {
         this.agregados = agregados;
     }
     
-    public void calcularQuantidadeTotalComida(List<ComidaQuantidadePadrao> listaQuantidades) {
+    public double calcularQuantidadeTotalComida(List<ComidaQuantidadePadrao> listaQuantidades) {
         // Obtém a quantidade de carne por tipo de pessoa
         double quantidadeCarneHomem = 0;
         double quantidadeCarneMulher = 0;
@@ -122,6 +122,8 @@ public class SimulacaoChurrasco {
         System.out.println("Total de Carne para Crianças: " + totalCarneCrianca + " kg");
         System.out.println("Total de Carne geral: " + totalCarnes + " kg");
         
+        // Retornar o total de carne geral
+        return totalCarnes;
     }
 
 

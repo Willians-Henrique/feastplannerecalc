@@ -20,10 +20,9 @@ import jakarta.persistence.EntityTransaction;
 public class SimulacaoBebidasChurrasco extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainWindow; // Referência à MainWindow
-	private SimulacaoChurrasco simulacao;
 
-    // Adiciona a variável de lista como campo da classe
-    private List<ComidaQuantidadePadrao> listaQuantidades;
+
+
     
 
 	public SimulacaoBebidasChurrasco(MainWindow mainWindow, SimulacaoChurrasco simulacao) {
@@ -107,17 +106,6 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	            public void actionPerformed(ActionEvent e) {
 	                // Aqui vamos criar uma instância de ResultadoSimulacao e preencher os dados
 	                ResultadoSimulacao resultadoSimulacao = new ResultadoSimulacao();
-	                
-	             // Carrega a lista de quantidades de comida padrão
-	                listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeCarnePorPessoa();
-	                
-	                System.out.println("Lista de Quantidade de Comida Padrão:");
-	                for (ComidaQuantidadePadrao comida : listaQuantidades) {
-	                    System.out.println(comida); // Agora imprimirá apenas os valores de quantidade_carne
-	                }
-	                
-	                // Calcula e imprime a quantidade total de comida para cada categoria de pessoa
-	                simulacao.calcularQuantidadeTotalComida(listaQuantidades);
 
 	                // Preenche os dados do objeto simulacao para o banco de dados
 	                resultadoSimulacao.setQuantidadeHomens(simulacao.getHomens());
@@ -150,16 +138,13 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	                }
 
 	                // Trocar para o painel de resultado da simulação de Salgado
-	                mainWindow.showPanel(new ResultadoSimulacaoChurrasco(mainWindow).getPanel());
+	                mainWindow.showPanel(new ResultadoSimulacaoChurrasco(mainWindow, simulacao).getPanel());
 	            }
 	        });
 
     }
 	
-	 // Getter para acessar a lista em outra parte do código, se necessário
-    public List<ComidaQuantidadePadrao> getListaQuantidades() {
-        return listaQuantidades;
-    }
+
     
     
 	public JPanel getPanel() {

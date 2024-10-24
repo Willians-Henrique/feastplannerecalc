@@ -3,17 +3,35 @@ package feastplannerecalc.views;
 import javax.swing.*;
 
 import feastplannerecalc.config.MainWindowConfig;
+import feastplannerecalc.model.ComidaQuantidadePadrao;
+import feastplannerecalc.models.SimulacaoChurrasco;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ResultadoSimulacaoChurrasco {
     private JPanel panel;
     private MainWindow mainWindow; // Referência à MainWindow para navegação entre telas
+	private SimulacaoChurrasco simulacao;
+    // Adiciona a variável de lista como campo da classe
+    private List<ComidaQuantidadePadrao> listaQuantidades;
 
-    public ResultadoSimulacaoChurrasco(MainWindow mainWindow) {
+    public ResultadoSimulacaoChurrasco(MainWindow mainWindow, SimulacaoChurrasco simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência para troca de painéis
+        this.simulacao = simulacao; // Inicializa a simulação
+        
+        // Carrega a lista de quantidades de comida padrão
+        listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeCarnePorPessoa();
+        
+        System.out.println("Lista de Quantidade de Comida Padrão:");
+        for (ComidaQuantidadePadrao comida : listaQuantidades) {
+            System.out.println(comida); // Agora imprimirá apenas os valores de quantidade_carne
+        }
+        
+        // Calcula e imprime a quantidade total de comida para cada categoria de pessoa
+        simulacao.calcularQuantidadeTotalComida(listaQuantidades);
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
@@ -98,6 +116,11 @@ public class ResultadoSimulacaoChurrasco {
 
         // Adiciona o painel de botões na parte inferior do layout principal
         panel.add(botoesPanel, BorderLayout.SOUTH);
+    }
+    
+	 // Getter para acessar a lista em outra parte do código, se necessário
+    public List<ComidaQuantidadePadrao> getListaQuantidades() {
+        return listaQuantidades;
     }
 
     public JPanel getPanel() {
