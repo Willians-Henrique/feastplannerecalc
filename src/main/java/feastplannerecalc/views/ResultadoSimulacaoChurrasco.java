@@ -30,8 +30,12 @@ public class ResultadoSimulacaoChurrasco {
             System.out.println(comida); // Agora imprimirá apenas os valores de quantidade_carne
         }
         
-        // Calcula e imprime a quantidade total de comida para cada categoria de pessoa
-        simulacao.calcularQuantidadeTotalComida(listaQuantidades);
+        // Define uma quantidade total de carne para a simulação
+        double quantidadeTotalCarne = simulacao.calcularQuantidadeTotalComida(listaQuantidades); 
+        
+        // Chama a função para calcular e visualizar a distribuição das carnes no console
+        simulacao.calcularDistribuicaoCarnes(quantidadeTotalCarne);
+        
 
         panel = new JPanel();
         panel.setLayout(new BorderLayout());

@@ -365,7 +365,7 @@ public class NovaSimulacaoChurrasco extends JPanel {
             	            System.out.println(frango);
             	        }
             	        for (String bovinoSem : bovinoSemOsso) {
-            	            System.out.println(bovinoSem);
+            	            System.out.println(bovinoSem);	
             	        }
             	        for (String suinoSem : suinoSemOsso) {
             	            System.out.println(suinoSem);

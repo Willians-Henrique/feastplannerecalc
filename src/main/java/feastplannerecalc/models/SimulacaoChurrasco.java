@@ -152,6 +152,77 @@ public class SimulacaoChurrasco {
         // Retornar o total de carne geral
         return totalCarnes;
     }
+    
+    public void calcularDistribuicaoCarnes(double quantidadeTotal) {
+        // Verificar quais categorias de carnes foram selecionadas
+        boolean bovinoSelecionado = !bovinoComOsso.isEmpty() || !bovinoSemOsso.isEmpty();
+        boolean suinoSelecionado = !suinoComOsso.isEmpty() || !suinoSemOsso.isEmpty();
+        boolean frangoSelecionado = !frangoComOsso.isEmpty();
 
+        // Definir porcentagens baseadas nas seleções
+        double porcentagemBovina = 0, porcentagemSuina = 0, porcentagemFrango = 0;
+        int categoriasSelecionadas = (bovinoSelecionado ? 1 : 0) + (suinoSelecionado ? 1 : 0) + (frangoSelecionado ? 1 : 0);
+
+        // Ajustar as porcentagens com base nas carnes selecionadas
+        switch (categoriasSelecionadas) {
+            case 1:
+                if (bovinoSelecionado) porcentagemBovina = 1.0;
+                if (suinoSelecionado) porcentagemSuina = 1.0;
+                if (frangoSelecionado) porcentagemFrango = 1.0;
+                break;
+            case 2:
+                if (bovinoSelecionado && suinoSelecionado) {
+                    porcentagemBovina = 0.60;
+                    porcentagemSuina = 0.40;
+                } else if (bovinoSelecionado && frangoSelecionado) {
+                    porcentagemBovina = 0.65;
+                    porcentagemFrango = 0.35;
+                } else if (suinoSelecionado && frangoSelecionado) {
+                    porcentagemSuina = 0.50;
+                    porcentagemFrango = 0.50;
+                }
+                break;
+            case 3:
+                porcentagemBovina = 0.50;
+                porcentagemSuina = 0.375;
+                porcentagemFrango = 0.125;
+                break;
+        }
+
+        // Distribuir as quantidades para cada categoria de carne
+        if (bovinoSelecionado) {
+            distribuirCarnesPorTipo(bovinoComOsso, bovinoSemOsso, quantidadeTotal * porcentagemBovina, 0.50, 0.50);
+        }
+        if (suinoSelecionado) {
+            distribuirCarnesPorTipo(suinoComOsso, suinoSemOsso, quantidadeTotal * porcentagemSuina, 0.33, 0.67);
+        }
+        if (frangoSelecionado) {
+            distribuirCarnes(frangoComOsso, quantidadeTotal * porcentagemFrango);
+        }
+    }
+
+    // Função para dividir carnes entre tipos com e sem osso, ou aplicar 100% se apenas uma opção estiver disponível
+    private void distribuirCarnesPorTipo(List<String> comOsso, List<String> semOsso, double quantidade, double percComOsso, double percSemOsso) {
+        if (!comOsso.isEmpty() && !semOsso.isEmpty()) {
+            distribuirCarnes(comOsso, quantidade * percComOsso);
+            distribuirCarnes(semOsso, quantidade * percSemOsso);
+        } else if (!comOsso.isEmpty()) {
+            distribuirCarnes(comOsso, quantidade);
+        } else if (!semOsso.isEmpty()) {
+            distribuirCarnes(semOsso, quantidade);
+        }
+    }
+
+    private void distribuirCarnes(List<String> carnes, double quantidade) {
+        if (!carnes.isEmpty()) {
+            double porItem = quantidade / carnes.size();
+            for (String item : carnes) {
+                // Formata a saída para exibir com 3 casas decimais e "kg"
+                System.out.printf("%s: %.3f kg%n", item, porItem / 1000); // Divide por 1000 apenas para exibição
+            }
+        }
+    }
+    
+    
 
 }

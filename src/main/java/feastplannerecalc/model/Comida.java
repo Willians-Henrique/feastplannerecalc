@@ -192,4 +192,11 @@ public class Comida {
     public void setAproveitamento(Double aproveitamento) {
         this.aproveitamento = aproveitamento;
     }
+    
+ // Calcula a quantidade ajustada pelo aproveitamento
+    public double calcularQuantidadeAproveitada(double quantidadeBase) {
+        return quantidadeBase * (aproveitamento != null ? aproveitamento : 1.0);
+    }
+
+
 }
