@@ -139,7 +139,7 @@ public class SimulacaoBebidas extends JPanel {
 	                }
 
 	                // Trocar para o painel de resultado da simulação de Salgado
-	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow).getPanel());
+	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow,simulacao).getPanel());
 	            }
 	        });
 

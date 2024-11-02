@@ -146,6 +146,28 @@ public class ComidaQuantidadePadrao {
         
         return listaQuantidades; // Retorna a lista
     }
+    
+    public static List<ComidaQuantidadePadrao> carregarQuantidadeSalgadoPorPessoa() {
+        List<ComidaQuantidadePadrao> listaQuantidades = new ArrayList<>(); // Inicializa a lista
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaQuantidades = session.createQuery("FROM ComidaQuantidadePadrao", ComidaQuantidadePadrao.class).list();
+            transaction.commit();
+            
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        
+        return listaQuantidades; // Retorna a lista
+    }
     @Override
     public String toString() {
         return quantidadeCarne != null ? quantidadeCarne.toString() : "Sem valor";

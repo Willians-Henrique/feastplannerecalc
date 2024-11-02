@@ -3,18 +3,37 @@ package feastplannerecalc.views;
 import javax.swing.*;
 
 import feastplannerecalc.config.MainWindowConfig;
+import feastplannerecalc.model.ComidaQuantidadePadrao;
+import feastplannerecalc.models.SimulacaoSalgado;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class ResultadoSimulacaoSalgado {
     private JPanel panel;
     private MainWindow mainWindow; // Referência à MainWindow para navegação entre telas
+    private SimulacaoSalgado simulacao;
+    
+    private List<ComidaQuantidadePadrao> listaQuantidades;
+    
 
-    public ResultadoSimulacaoSalgado(MainWindow mainWindow) {
+    public ResultadoSimulacaoSalgado(MainWindow mainWindow,SimulacaoSalgado simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência para troca de painéis
+        this.simulacao = simulacao; // Inicializa a simulação
 
+        
+        // Carrega a lista de quantidades de comida padrão
+        listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeSalgadoPorPessoa();
+        
+        // Define uma quantidade total de carne para a simulação
+        double quantidadeTotalSalgado = simulacao.calcularQuantidadeTotalComida(listaQuantidades);
+        
+        // Chama a função para calcular e visualizar a distribuição das carnes no console
+        simulacao.calcularDistribuicaoSalgados(quantidadeTotalSalgado);
+        
+        
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 

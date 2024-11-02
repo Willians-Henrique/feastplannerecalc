@@ -2,6 +2,8 @@ package feastplannerecalc.models;
 
 import java.util.List;
 
+import feastplannerecalc.model.ComidaQuantidadePadrao;
+
 public class SimulacaoSalgado {
 
     private int homens;
@@ -81,5 +83,46 @@ public class SimulacaoSalgado {
         this.agregados = agregados;
     }
     
-    
+    public double calcularQuantidadeTotalComida(List<ComidaQuantidadePadrao> listaQuantidades) {
+        // Obtém a quantidade de salgado por tipo de pessoa
+        double quantidadeSalgadoHomem = 0;
+        double quantidadeSalgadoMulher = 0;
+        double quantidadeSalgadoComilao = 0;
+        double quantidadeSalgadoCrianca = 0;
+
+        // Itera sobre a lista de quantidades padrão para encontrar as categorias
+        for (ComidaQuantidadePadrao quantidade : listaQuantidades) {
+            switch (quantidade.getPessoasCategoria().getCategoria().toLowerCase()) {
+                case "homem":
+                	quantidadeSalgadoHomem = quantidade.getQuantidadeSalgado();
+                    break;
+                case "mulher":
+                	quantidadeSalgadoMulher = quantidade.getQuantidadeSalgado();
+                    break;
+                case "comilão":
+                	quantidadeSalgadoComilao = quantidade.getQuantidadeSalgado();
+                    break;
+                case "criança":
+                	quantidadeSalgadoCrianca = quantidade.getQuantidadeSalgado();
+                    break;
+            }
+        }
+
+        // Multiplicar a quantidade de carne por número de pessoas de cada categoria
+        double totalSalgadoHomem = quantidadeSalgadoHomem * getHomens();
+        double totalSalgadoMulher = quantidadeSalgadoMulher * getMulheres();
+        double totalSalgadoComilao = quantidadeSalgadoComilao * getComiloes();
+        double totalSalgadoCrianca = quantidadeSalgadoCrianca * getCriancas();
+        double totalSagados = (totalSalgadoCrianca+totalSalgadoComilao+totalSalgadoMulher+totalSalgadoHomem);
+
+        // Imprimir os resultados no console
+        System.out.println("Total de Salgados para Homens: " + totalSalgadoHomem + " un");
+        System.out.println("Total de Salgados para Mulheres: " + totalSalgadoMulher + " un");
+        System.out.println("Total de Salgados para Comilões: " + totalSalgadoComilao + " un");
+        System.out.println("Total de Salgados para Crianças: " + totalSalgadoCrianca + " un");
+        System.out.println("Total de Salgados geral: " + totalSagados + " un");
+        
+        // Retornar o total de carne geral
+        return totalSagados;
+    }
 }
