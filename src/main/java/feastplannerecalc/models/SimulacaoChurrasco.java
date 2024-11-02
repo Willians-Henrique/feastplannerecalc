@@ -1,7 +1,11 @@
 package feastplannerecalc.models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
 
 public class SimulacaoChurrasco {
@@ -153,6 +157,9 @@ public class SimulacaoChurrasco {
         return totalCarnes;
     }
     
+ // Variável para armazenar todas as quantidades ajustadas de todas as carnes
+    private List<Double> quantidadesAjustadasTotais = new ArrayList<>();
+
     public void calcularDistribuicaoCarnes(double quantidadeTotal) {
         // Verificar quais categorias de carnes foram selecionadas
         boolean bovinoSelecionado = !bovinoComOsso.isEmpty() || !bovinoSemOsso.isEmpty();
@@ -199,6 +206,8 @@ public class SimulacaoChurrasco {
         if (frangoSelecionado) {
             distribuirCarnes(frangoComOsso, quantidadeTotal * porcentagemFrango);
         }
+     // Imprime a quantidade total ajustada de todas as carnes após todas as distribuições
+        imprimirECalcularTotal(quantidadesAjustadasTotais);
     }
 
     // Função para dividir carnes entre tipos com e sem osso, ou aplicar 100% se apenas uma opção estiver disponível
@@ -215,12 +224,68 @@ public class SimulacaoChurrasco {
 
     private void distribuirCarnes(List<String> carnes, double quantidade) {
         if (!carnes.isEmpty()) {
+            // Carrega a lista de aproveitamento das carnes selecionadas
+            List<Comida> comidasSelecionadas = SimulacaoChurrasco.carregarAproveitamento(this);
+
+            // Cria um mapa para associar o nome da carne ao seu aproveitamento
+            Map<String, Double> mapaAproveitamento = new HashMap<>();
+            for (Comida comida : comidasSelecionadas) {
+                mapaAproveitamento.put(comida.getNome(), comida.getAproveitamento());
+            }
+
             double porItem = quantidade / carnes.size();
+
             for (String item : carnes) {
+                // Obtém o aproveitamento da carne, padrão 1.0 se não estiver no mapa
+                double aproveitamentoItem = mapaAproveitamento.getOrDefault(item, 1.0);
+                double quantidadeAjustada = porItem / aproveitamentoItem;
+
+             // Adiciona a quantidade ajustada ao array total
+                quantidadesAjustadasTotais.add(quantidadeAjustada);
+
                 // Formata a saída para exibir com 3 casas decimais e "kg"
-                System.out.printf("%s: %.3f kg%n", item, porItem / 1000); // Divide por 1000 apenas para exibição
+                System.out.printf("%s: %.3f kg%n", item, quantidadeAjustada / 1000); // Divide por 1000 para exibição
             }
         }
+    }
+
+    private void imprimirECalcularTotal(List<Double> quantidadesAjustadas) {
+        double totalAjustado = 0.0;
+        System.out.println("Quantidades ajustadas por carne:");
+
+        for (Double quantidade : quantidadesAjustadas) {
+            totalAjustado += quantidade;
+            System.out.printf("%.3f kg%n", quantidade / 1000); // Divide por 1000 para exibição
+        }
+
+        System.out.printf("Quantidade total ajustada de carnes: %.3f kg%n", totalAjustado / 1000);
+    }
+
+
+
+    
+    // Método estático que carrega e filtra os aproveitamentos das comidas selecionadas
+    public static List<Comida> carregarAproveitamento(SimulacaoChurrasco simulacao) {
+        // Carrega todas as comidas
+        List<Comida> listaComidas = Comida.carregarTodasComidas();
+
+        // Combina todas as listas de comidas selecionadas pelo usuário
+        List<String> selecionados = new ArrayList<>();
+        selecionados.addAll(simulacao.getBovinoComOsso());
+        selecionados.addAll(simulacao.getSuinoComOsso());
+        selecionados.addAll(simulacao.getFrangoComOsso());
+        selecionados.addAll(simulacao.getBovinoSemOsso());
+        selecionados.addAll(simulacao.getSuinoSemOsso());
+        selecionados.addAll(simulacao.getAgregados());
+
+        // Filtra as comidas selecionadas
+        List<Comida> comidasSelecionadas = new ArrayList<>();
+        for (Comida comida : listaComidas) {
+            if (selecionados.contains(comida.getNome())) {
+                comidasSelecionadas.add(comida);
+            }
+        }
+        return comidasSelecionadas;
     }
     
     

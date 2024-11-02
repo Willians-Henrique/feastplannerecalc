@@ -19,7 +19,6 @@ public class ResultadoSimulacaoChurrasco {
 	private SimulacaoChurrasco simulacao;
     // Adiciona a variável de lista como campo da classe
     private List<ComidaQuantidadePadrao> listaQuantidades;
-    private List<Comida> listaComidas;
 
     public ResultadoSimulacaoChurrasco(MainWindow mainWindow, SimulacaoChurrasco simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência para troca de painéis
@@ -28,23 +27,11 @@ public class ResultadoSimulacaoChurrasco {
         // Carrega a lista de quantidades de comida padrão
         listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeCarnePorPessoa();
         
-        // Carrega a lista de comidas
-        listaComidas = Comida.carregarTodasComidas();
-        
-     // Combina todas as listas de comidas selecionadas pelo usuário
-        List<String> selecionados = new ArrayList<>();
-        selecionados.addAll(simulacao.getBovinoComOsso());
-        selecionados.addAll(simulacao.getSuinoComOsso());
-        selecionados.addAll(simulacao.getFrangoComOsso());
-        selecionados.addAll(simulacao.getBovinoSemOsso());
-        selecionados.addAll(simulacao.getSuinoSemOsso());
-        selecionados.addAll(simulacao.getAgregados());
-
+        // Carrega e exibe no console a lista de comidas selecionadas e seus aproveitamentos
+        List<Comida> comidasSelecionadas = SimulacaoChurrasco.carregarAproveitamento(simulacao);
         System.out.println("Lista de Comidas Selecionadas e Aproveitamento:");
-        for (Comida comida : listaComidas) {
-            if (selecionados.contains(comida.getNome())) {
-                System.out.println("Nome: " + comida.getNome() + ", Aproveitamento: " + comida.getAproveitamento());
-            }
+        for (Comida comida : comidasSelecionadas) {
+            System.out.println("Nome: " + comida.getNome() + ", Aproveitamento: " + comida.getAproveitamento());
         }
         
         
