@@ -1,6 +1,14 @@
 package feastplannerecalc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import feastplannerecalc.database.HibernateUtil;
 import jakarta.persistence.*;
+
 
 /**
  * Classe que representa as comidas disponíveis para a simulação, podendo ser categorizadas 
@@ -193,10 +201,35 @@ public class Comida {
         this.aproveitamento = aproveitamento;
     }
     
- // Calcula a quantidade ajustada pelo aproveitamento
+    public static List<Comida> carregarTodasComidas() {
+        List<Comida> listaComidas = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaComidas = session.createQuery("FROM Comida", Comida.class).list();
+            transaction.commit();
+            
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return listaComidas;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Comida{id=%d, nome='%s', tipo=%s, categoriaCarne=%s, categoriaSalgado=%s, opcaoSemCarne=%s, aproveitamento=%.2f}",
+                id, nome, tipoComida, categoriaCarne, categoriaSalgado, opcaoSemCarne, (aproveitamento != null ? aproveitamento : 1.0));
+    }
+
     public double calcularQuantidadeAproveitada(double quantidadeBase) {
         return quantidadeBase * (aproveitamento != null ? aproveitamento : 1.0);
     }
-
-
 }

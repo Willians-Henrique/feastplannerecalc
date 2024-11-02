@@ -201,7 +201,7 @@ public class NovaSimulacaoChurrasco extends JPanel {
 
         this.costelaSuinaCheckBox = new JCheckBox("Costela Suína");
         suinosPanel.add(this.costelaSuinaCheckBox, gbcSuinos);
-        this.bistecaCheckBox = new JCheckBox("Bisteca");
+        this.bistecaCheckBox = new JCheckBox("Bisteca Suína");
         suinosPanel.add(this.bistecaCheckBox, gbcSuinos);
         this.pernilcomOssoCheckBox = new JCheckBox("Pernil com Osso");
         suinosPanel.add(this.pernilcomOssoCheckBox, gbcSuinos);
@@ -311,13 +311,13 @@ public class NovaSimulacaoChurrasco extends JPanel {
             	        List<String> suinoComOsso = new ArrayList<>();
             	        if (costelaSuinaCheckBox.isSelected()) suinoComOsso.add("Costela Suína");
             	        if (bistecaCheckBox.isSelected()) suinoComOsso.add("Bisteca Suína");
-            	        if (pernilcomOssoCheckBox.isSelected()) suinoComOsso.add("Pernil Com Osso");
+            	        if (pernilcomOssoCheckBox.isSelected()) suinoComOsso.add("Pernil com Osso");
             	        simulacao.setSuinoComOsso(suinoComOsso);
             	        
             	        List<String> frangoComOsso = new ArrayList<>();
             	        if (asinhacomCoxinhaCheckBox.isSelected()) frangoComOsso.add("Asinha com Coxinha");
             	        if (tulipadaAsaCheckBox.isSelected()) frangoComOsso.add("Tulipa da Asa");
-            	        if (coxacomSobrecoxaCheckBox.isSelected()) frangoComOsso.add("Coxa com Sobre Coxa");
+            	        if (coxacomSobrecoxaCheckBox.isSelected()) frangoComOsso.add("Coxa com Sobrecoxa");
             	        simulacao.setFrangoComOsso(frangoComOsso);
 
             	        List<String> bovinoSemOsso = new ArrayList<>();

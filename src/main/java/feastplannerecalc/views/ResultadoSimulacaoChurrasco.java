@@ -3,12 +3,14 @@ package feastplannerecalc.views;
 import javax.swing.*;
 
 import feastplannerecalc.config.MainWindowConfig;
+import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
 import feastplannerecalc.models.SimulacaoChurrasco;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResultadoSimulacaoChurrasco {
@@ -17,6 +19,7 @@ public class ResultadoSimulacaoChurrasco {
 	private SimulacaoChurrasco simulacao;
     // Adiciona a variável de lista como campo da classe
     private List<ComidaQuantidadePadrao> listaQuantidades;
+    private List<Comida> listaComidas;
 
     public ResultadoSimulacaoChurrasco(MainWindow mainWindow, SimulacaoChurrasco simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência para troca de painéis
@@ -25,10 +28,25 @@ public class ResultadoSimulacaoChurrasco {
         // Carrega a lista de quantidades de comida padrão
         listaQuantidades = ComidaQuantidadePadrao.carregarQuantidadeCarnePorPessoa();
         
-        System.out.println("Lista de Quantidade de Comida Padrão:");
-        for (ComidaQuantidadePadrao comida : listaQuantidades) {
-            System.out.println(comida); // Agora imprimirá apenas os valores de quantidade_carne
+        // Carrega a lista de comidas
+        listaComidas = Comida.carregarTodasComidas();
+        
+     // Combina todas as listas de comidas selecionadas pelo usuário
+        List<String> selecionados = new ArrayList<>();
+        selecionados.addAll(simulacao.getBovinoComOsso());
+        selecionados.addAll(simulacao.getSuinoComOsso());
+        selecionados.addAll(simulacao.getFrangoComOsso());
+        selecionados.addAll(simulacao.getBovinoSemOsso());
+        selecionados.addAll(simulacao.getSuinoSemOsso());
+        selecionados.addAll(simulacao.getAgregados());
+
+        System.out.println("Lista de Comidas Selecionadas e Aproveitamento:");
+        for (Comida comida : listaComidas) {
+            if (selecionados.contains(comida.getNome())) {
+                System.out.println("Nome: " + comida.getNome() + ", Aproveitamento: " + comida.getAproveitamento());
+            }
         }
+        
         
         // Define uma quantidade total de carne para a simulação
         double quantidadeTotalCarne = simulacao.calcularQuantidadeTotalComida(listaQuantidades); 
