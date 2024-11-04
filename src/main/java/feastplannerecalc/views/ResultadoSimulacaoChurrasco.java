@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ResultadoSimulacaoChurrasco {
     private JPanel panel;
@@ -58,11 +59,19 @@ public class ResultadoSimulacaoChurrasco {
 
         JTextArea carnesAcompanhamentosText = new JTextArea(10, 30);
         carnesAcompanhamentosText.setEditable(false);
-        carnesAcompanhamentosText.append("Picanha: 2 kg\n");
-        carnesAcompanhamentosText.append("Maminha: 1.5 kg\n");
-        carnesAcompanhamentosText.append("Linguiça: 1 kg\n");
-        carnesAcompanhamentosText.append("Farofa: 0.5 kg\n");
-        carnesAcompanhamentosText.append("Vinagrete: 0.7 kg\n");
+        
+     // Exibe carnes com osso
+        Map<String, Double> carnesComOsso = simulacao.obterCarnesComOsso();
+        carnesComOsso.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " kg\n"));
+
+        // Exibe carnes sem osso
+        Map<String, Double> carnesSemOsso = simulacao.obterCarnesSemOsso();
+        carnesSemOsso.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " kg\n"));
+        
+     // Exibe frangos
+        Map<String, Double> carnesFrango = simulacao.obterCarnesFrango();
+        carnesFrango.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " kg\n"));
+        
         carnesAcompanhamentosPanel.add(new JScrollPane(carnesAcompanhamentosText), BorderLayout.CENTER);
 
         // Quadro direito: Bebidas e Acessórios (Exemplos visuais)

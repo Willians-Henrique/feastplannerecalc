@@ -22,6 +22,11 @@ public class SimulacaoChurrasco {
     private List<String> suinoSemOsso;
     private List<String> frangoComOsso;
     private List<String> agregados;
+    
+    private List<Double> quantidadesAjustadasTotais = new ArrayList<>();
+    private Map<String, Double> carnesComOssoMap = new HashMap<>();
+    private Map<String, Double> carnesSemOssoMap = new HashMap<>();
+    private Map<String, Double> carnesFrangoMap = new HashMap<>(); // Novo mapa para frango
 
     // Construtores, getters e setters
     public SimulacaoChurrasco() {}
@@ -157,8 +162,6 @@ public class SimulacaoChurrasco {
         return totalCarnes;
     }
     
- // Variável para armazenar todas as quantidades ajustadas de todas as carnes
-    private List<Double> quantidadesAjustadasTotais = new ArrayList<>();
 
     public void calcularDistribuicaoCarnes(double quantidadeTotal) {
         // Verificar quais categorias de carnes foram selecionadas
@@ -204,7 +207,7 @@ public class SimulacaoChurrasco {
             distribuirCarnesPorTipo(suinoComOsso, suinoSemOsso, quantidadeTotal * porcentagemSuina, 0.33, 0.67);
         }
         if (frangoSelecionado) {
-            distribuirCarnes(frangoComOsso, quantidadeTotal * porcentagemFrango);
+        	 distribuirCarnes(frangoComOsso, quantidadeTotal * porcentagemFrango, carnesFrangoMap); // Passa o mapa de frango
         }
      // Imprime a quantidade total ajustada de todas as carnes após todas as distribuições
         imprimirECalcularTotal(quantidadesAjustadasTotais);
@@ -213,21 +216,18 @@ public class SimulacaoChurrasco {
     // Função para dividir carnes entre tipos com e sem osso, ou aplicar 100% se apenas uma opção estiver disponível
     private void distribuirCarnesPorTipo(List<String> comOsso, List<String> semOsso, double quantidade, double percComOsso, double percSemOsso) {
         if (!comOsso.isEmpty() && !semOsso.isEmpty()) {
-            distribuirCarnes(comOsso, quantidade * percComOsso);
-            distribuirCarnes(semOsso, quantidade * percSemOsso);
+            distribuirCarnes(comOsso, quantidade * percComOsso, carnesComOssoMap);
+            distribuirCarnes(semOsso, quantidade * percSemOsso, carnesSemOssoMap);
         } else if (!comOsso.isEmpty()) {
-            distribuirCarnes(comOsso, quantidade);
+            distribuirCarnes(comOsso, quantidade, carnesComOssoMap);
         } else if (!semOsso.isEmpty()) {
-            distribuirCarnes(semOsso, quantidade);
+            distribuirCarnes(semOsso, quantidade, carnesSemOssoMap);
         }
     }
 
-    private void distribuirCarnes(List<String> carnes, double quantidade) {
+    private void distribuirCarnes(List<String> carnes, double quantidade, Map<String, Double> mapaCarnes) {
         if (!carnes.isEmpty()) {
-            // Carrega a lista de aproveitamento das carnes selecionadas
             List<Comida> comidasSelecionadas = SimulacaoChurrasco.carregarAproveitamento(this);
-
-            // Cria um mapa para associar o nome da carne ao seu aproveitamento
             Map<String, Double> mapaAproveitamento = new HashMap<>();
             for (Comida comida : comidasSelecionadas) {
                 mapaAproveitamento.put(comida.getNome(), comida.getAproveitamento());
@@ -236,17 +236,24 @@ public class SimulacaoChurrasco {
             double porItem = quantidade / carnes.size();
 
             for (String item : carnes) {
-                // Obtém o aproveitamento da carne, padrão 1.0 se não estiver no mapa
                 double aproveitamentoItem = mapaAproveitamento.getOrDefault(item, 1.0);
                 double quantidadeAjustada = porItem / aproveitamentoItem;
-
-             // Adiciona a quantidade ajustada ao array total
                 quantidadesAjustadasTotais.add(quantidadeAjustada);
-
-                // Formata a saída para exibir com 3 casas decimais e "kg"
-                System.out.printf("%s: %.3f kg%n", item, quantidadeAjustada / 1000); // Divide por 1000 para exibição
+                mapaCarnes.put(item, quantidadeAjustada / 1000); // Armazena em kg
             }
         }
+    }
+    
+    public Map<String, Double> obterCarnesComOsso() {
+        return carnesComOssoMap;
+    }
+
+    public Map<String, Double> obterCarnesSemOsso() {
+        return carnesSemOssoMap;
+    }
+    
+    public Map<String, Double> obterCarnesFrango() { // Novo método para obter o mapa de frango
+        return carnesFrangoMap;
     }
 
     private void imprimirECalcularTotal(List<Double> quantidadesAjustadas) {
