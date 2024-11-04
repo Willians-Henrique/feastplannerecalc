@@ -1,5 +1,7 @@
 package feastplannerecalc.models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import feastplannerecalc.model.ComidaQuantidadePadrao;
@@ -15,6 +17,10 @@ public class SimulacaoSalgado {
     private List<String> salgadosAssados;
     private List<String> salgadosFritos;
     private List<String> agregados;
+    
+    private HashMap<String, Integer> salgadosComCarneQuantidades = new HashMap<>();
+    private HashMap<String, Integer> salgadosSemCarneQuantidades = new HashMap<>();
+
 
     // Construtores, getters e setters
     public SimulacaoSalgado() {}
@@ -125,4 +131,66 @@ public class SimulacaoSalgado {
         // Retornar o total de carne geral
         return totalSagados;
     }
+    
+    public void calcularDistribuicaoSalgados(double quantidadeTotal) {
+        // Arredonda a quantidade total de salgados para o próximo múltiplo de 100
+        int totalSalgados = (int) Math.ceil(quantidadeTotal / 100) * 100;
+
+        // Calcula a quantidade total de centros de 100 salgados
+        int centros = totalSalgados / 100;
+
+        // Define a quantidade total de salgados a ser dividida
+        int quantidadePorCentro = centros * 100;
+        int quantidadeFritos = 0;
+        int quantidadeAssados = 0;
+
+        // Verifica quais categorias foram selecionadas e define a divisão entre fritos e assados
+        boolean fritosSelecionados = !salgadosFritos.isEmpty();
+        boolean assadosSelecionados = !salgadosAssados.isEmpty();
+
+        if (fritosSelecionados && assadosSelecionados) {
+            // Divide igualmente entre fritos e assados
+            quantidadeFritos = quantidadePorCentro / 2;
+            quantidadeAssados = quantidadePorCentro / 2;
+        } else if (fritosSelecionados) {
+            // Todos os salgados são fritos
+            quantidadeFritos = quantidadePorCentro;
+        } else if (assadosSelecionados) {
+            // Todos os salgados são assados
+            quantidadeAssados = quantidadePorCentro;
+        }
+
+        // Distribui a quantidade de fritos entre os tipos selecionados
+        distribuirSalgados(salgadosFritos, quantidadeFritos, salgadosComCarneQuantidades);
+
+        // Distribui a quantidade de assados entre os tipos selecionados
+        distribuirSalgados(salgadosAssados, quantidadeAssados, salgadosSemCarneQuantidades);
+    }
+
+    private void distribuirSalgados(List<String> salgados, int quantidade, HashMap<String, Integer> hashMapDestino) {
+        if (!salgados.isEmpty()) {
+            int porSalgado = quantidade / salgados.size();
+
+            for (String salgado : salgados) {
+                hashMapDestino.put(salgado, porSalgado);
+            }
+        }
+    }
+
+    // Métodos para obter os HashMaps com os resultados
+    public HashMap<String, Integer> obterSalgadosComCarne() {
+        return salgadosComCarneQuantidades;
+    }
+
+    public HashMap<String, Integer> obterSalgadosSemCarne() {
+        return salgadosSemCarneQuantidades;
+    }
+
+    public List<String> obterAcessoriosEBebidas() {
+        List<String> acessoriosEBebidas = new ArrayList<>();
+        // Adicione lógica para adicionar bebidas e acessórios formatados, exemplo:
+        // acessoriosEBebidas.add("Cerveja: " + quantidadeCerveja + " L");
+        return acessoriosEBebidas;
+    }
+
 }

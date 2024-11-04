@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Map;
 
 public class ResultadoSimulacaoSalgado {
     private JPanel panel;
@@ -50,12 +51,12 @@ public class ResultadoSimulacaoSalgado {
 
         JTextArea salgadosComCarneText = new JTextArea(10, 30);
         salgadosComCarneText.setEditable(false);
-        salgadosComCarneText.append("Coxinha: 30 unidades\n");
-        salgadosComCarneText.append("Kibe: 25 unidades\n");
-        salgadosComCarneText.append("Esfirra de Carne: 40 unidades\n");
-        salgadosComCarneText.append("Hamburger: 20 unidades\n");
-        salgadosComCarneText.append("Pastel de Carne: 35 unidades\n");
+        // Exibe os salgados com carne
+        for (Map.Entry<String, Integer> entry : simulacao.obterSalgadosComCarne().entrySet()) {
+            salgadosComCarneText.append(entry.getKey() + ": " + entry.getValue() + " unidades\n");
+        }
         salgadosComCarnePanel.add(new JScrollPane(salgadosComCarneText), BorderLayout.CENTER);
+
 
         // Quadro direito: Salgados Sem Carne + Bebidas + Acessórios (Exemplos visuais)
         JPanel salgadosSemCarnePanel = new JPanel();
@@ -64,14 +65,14 @@ public class ResultadoSimulacaoSalgado {
 
         JTextArea salgadosSemCarneText = new JTextArea(10, 30);
         salgadosSemCarneText.setEditable(false);
-        salgadosSemCarneText.append("Pizza: 15 unidades\n");
-        salgadosSemCarneText.append("Bolinha de Queijo: 30 unidades\n");
-        salgadosSemCarneText.append("Risóles de Queijo: 20 unidades\n");
-        salgadosSemCarneText.append("Cerveja: 10 L\n");
-        salgadosSemCarneText.append("Refrigerante: 5 L\n");
-        salgadosSemCarneText.append("Copo: 50 unidades\n");
-        salgadosSemCarneText.append("Prato: 30 unidades\n");
-        salgadosSemCarneText.append("Papel Toalha: 3 rolos\n");
+     // Exibe os salgados sem carne
+        for (Map.Entry<String, Integer> entry : simulacao.obterSalgadosSemCarne().entrySet()) {
+            salgadosSemCarneText.append(entry.getKey() + ": " + entry.getValue() + " unidades\n");
+        }
+        for (String acessorio : simulacao.obterAcessoriosEBebidas()) {
+            salgadosSemCarneText.append(acessorio + "\n");
+        }
+        
         salgadosSemCarnePanel.add(new JScrollPane(salgadosSemCarneText), BorderLayout.CENTER);
 
         // Adiciona os quadros ao painel principal
