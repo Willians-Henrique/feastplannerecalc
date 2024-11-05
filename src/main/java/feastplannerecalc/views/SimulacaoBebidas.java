@@ -3,6 +3,8 @@ package feastplannerecalc.views;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
 import jakarta.persistence.EntityManager;
@@ -21,6 +23,18 @@ public class SimulacaoBebidas extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainWindow; // Referência à MainWindow
 	private SimulacaoSalgado simulacao;
+	
+	//JCheckBoxes para capturar as opcoes de bebidas nao alcoolicas
+    private JCheckBox cervejaSemAlcoolCheckbox;
+    private JCheckBox aguaCheckBox;
+    private JCheckBox sucoCheckBox;
+    private JCheckBox refrigeranteCheckBox;
+    
+	//JCheckBoxes para capturar as opcoes de bebidas alcoolicas
+    private JCheckBox cervejaCheckbox;
+    private JCheckBox vinhoCheckBox;
+    private JCheckBox vodkaCheckBox;
+    private JCheckBox drinkCheckBox;
 
 	public SimulacaoBebidas(MainWindow mainWindow, SimulacaoSalgado simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência à janela principal
@@ -41,10 +55,17 @@ public class SimulacaoBebidas extends JPanel {
         nonAlcoholicPanel.setBorder(BorderFactory.createTitledBorder("Bebidas Não Alcoólicas"));
         
         // Adiciona os itens de bebidas não alcoólicas
-        nonAlcoholicPanel.add(new JCheckBox("Cerveja Sem Álcool"));
-        nonAlcoholicPanel.add(new JCheckBox("Água"));
-        nonAlcoholicPanel.add(new JCheckBox("Suco"));
-        nonAlcoholicPanel.add(new JCheckBox("Refrigerante"));
+        this.cervejaSemAlcoolCheckbox = new JCheckBox("Cerveja Sem Álcool");
+        nonAlcoholicPanel.add(this.cervejaSemAlcoolCheckbox, centralPanel);
+
+        this.aguaCheckBox = new JCheckBox("Água");
+        nonAlcoholicPanel.add(this.aguaCheckBox, centralPanel);
+        
+        this.sucoCheckBox = new JCheckBox("Suco");
+        nonAlcoholicPanel.add(this.sucoCheckBox, centralPanel);
+        
+        this.refrigeranteCheckBox = new JCheckBox("Refrigerante");
+        nonAlcoholicPanel.add(this.refrigeranteCheckBox, centralPanel);
 
         // Painel da Direita (Bebidas Alcoólicas)
         JPanel alcoholicPanel = new JPanel();
@@ -52,11 +73,18 @@ public class SimulacaoBebidas extends JPanel {
         alcoholicPanel.setBorder(BorderFactory.createTitledBorder("Bebidas Alcoólicas"));
         
         // Adiciona os itens de bebidas alcoólicas
-        alcoholicPanel.add(new JCheckBox("Cerveja"));
-        alcoholicPanel.add(new JCheckBox("Vinho"));
-        alcoholicPanel.add(new JCheckBox("Vodka"));
-        alcoholicPanel.add(new JCheckBox("Drink"));
-
+        this.cervejaCheckbox = new JCheckBox("Cerveja");
+        alcoholicPanel.add(this.cervejaCheckbox, centralPanel);
+        
+        this.vinhoCheckBox = new JCheckBox("Vinho");
+        alcoholicPanel.add(this.vinhoCheckBox, centralPanel);
+        
+        this.vodkaCheckBox = new JCheckBox("Vodka");
+        alcoholicPanel.add(this.vodkaCheckBox, centralPanel);
+        
+        this.drinkCheckBox = new JCheckBox("Drink");
+        alcoholicPanel.add(this.drinkCheckBox, centralPanel);
+        
         // Adiciona os subpainéis ao painel central
         centralPanel.add(nonAlcoholicPanel);
         centralPanel.add(alcoholicPanel);
@@ -140,9 +168,37 @@ public class SimulacaoBebidas extends JPanel {
 
 	                // Trocar para o painel de resultado da simulação de Salgado
 	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow,simulacao).getPanel());
+	            
+	             // Adicionar bebidas sem alcool selecionadas
+	    	        List<String> bebidasSemAlcool = new ArrayList<>();
+	    	        if (cervejaSemAlcoolCheckbox.isSelected()) bebidasSemAlcool.add("Cerveja Sem Álcool");
+	    	        if (aguaCheckBox.isSelected()) bebidasSemAlcool.add("Água");
+	    	        if (sucoCheckBox.isSelected()) bebidasSemAlcool.add("Suco");
+	    	        if (refrigeranteCheckBox.isSelected()) bebidasSemAlcool.add("Refrigerante");
+	    	        
+	    	        simulacao.setBebidasSemAlcool(bebidasSemAlcool);
+	    	     // Loop para exibir bebidas sem álcool no console
+	    	        System.out.println("Bebidas Sem Álcool Selecionadas:");
+	    	        for (String bebida : bebidasSemAlcool) {
+	    	            System.out.println("- " + bebida);
+	    	        }
+	            
+	             // Adicionar bebidas com alcool selecionadas
+	    	        List<String> bebidasComAlcool = new ArrayList<>();
+	    	        if (cervejaCheckbox.isSelected()) bebidasComAlcool.add("Cerveja");
+	    	        if (vinhoCheckBox.isSelected()) bebidasComAlcool.add("Vinho");
+	    	        if (vodkaCheckBox.isSelected()) bebidasComAlcool.add("Vodka");
+	    	        if (drinkCheckBox.isSelected()) bebidasComAlcool.add("Drink");
+	    	        
+	    	        simulacao.setBebidasSemAlcool(bebidasComAlcool);
+	    	        
+	    	     // Loop para exibir bebidas com álcool no console
+	    	        System.out.println("Bebidas Com Álcool Selecionadas:");
+	    	        for (String bebida : bebidasComAlcool) {
+	    	            System.out.println("- " + bebida);
+	    	        }
 	            }
 	        });
-
 
     }
 	public JPanel getPanel() {

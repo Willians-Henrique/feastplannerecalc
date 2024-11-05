@@ -19,6 +19,8 @@ public class SimulacaoSalgado {
     private List<String> salgadosAssados;
     private List<String> salgadosFritos;
     private List<String> agregados;
+    private List<String> bebidasSemAlcool;
+    private List<String> bebidasComAlcool;
     
     private HashMap<String, Integer> salgadosComCarneQuantidades = new HashMap<>();
     private HashMap<String, Integer> salgadosSemCarneQuantidades = new HashMap<>();
@@ -89,6 +91,22 @@ public class SimulacaoSalgado {
 
     public void setAgregados(List<String> agregados) {
         this.agregados = agregados;
+    }
+    
+    public List<String> getBebidasSemAlcool() {
+        return bebidasSemAlcool;
+    }
+
+    public void setBebidasSemAlcool(List<String> bebidasSemAlcool) {
+        this.bebidasSemAlcool = bebidasSemAlcool;
+    }
+    
+    public List<String> getBebidasComAlcool() {
+        return bebidasComAlcool;
+    }
+
+    public void setBebidasComAlcool(List<String> bebidasComAlcool) {
+        this.bebidasComAlcool = bebidasComAlcool;
     }
     
     public double calcularQuantidadeTotalComida(List<ComidaQuantidadePadrao> listaQuantidades) {

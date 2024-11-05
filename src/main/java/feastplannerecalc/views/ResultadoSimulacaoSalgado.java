@@ -52,9 +52,11 @@ public class ResultadoSimulacaoSalgado {
         JTextArea salgadosComCarneText = new JTextArea(10, 30);
         salgadosComCarneText.setEditable(false);
         // Exibe os salgados com carne
-        for (Map.Entry<String, Integer> entry : simulacao.obterSalgadosComCarne().entrySet()) {
-            salgadosComCarneText.append(entry.getKey() + ": " + entry.getValue() + " unidades\n");
-        }
+     // Carrega e exibe os salgados com carne
+        Map<String, Integer> salgadosComCarne = simulacao.obterSalgadosComCarne();
+        salgadosComCarne.forEach((nome, quantidade) -> 
+            salgadosComCarneText.append(nome + ": " + quantidade + " unidades\n")
+        );
         salgadosComCarnePanel.add(new JScrollPane(salgadosComCarneText), BorderLayout.CENTER);
 
 
@@ -65,13 +67,16 @@ public class ResultadoSimulacaoSalgado {
 
         JTextArea salgadosSemCarneText = new JTextArea(10, 30);
         salgadosSemCarneText.setEditable(false);
-     // Exibe os salgados sem carne
-        for (Map.Entry<String, Integer> entry : simulacao.obterSalgadosSemCarne().entrySet()) {
-            salgadosSemCarneText.append(entry.getKey() + ": " + entry.getValue() + " unidades\n");
-        }
-        for (String acessorio : simulacao.obterAcessoriosEBebidas()) {
-            salgadosSemCarneText.append(acessorio + "\n");
-        }
+
+     // Carrega e exibe os salgados sem carne
+        Map<String, Integer> salgadosSemCarne = simulacao.obterSalgadosSemCarne();
+        salgadosSemCarne.forEach((nome, quantidade) -> 
+            salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n")
+        );
+        List<String> acessoriosEBebidas = simulacao.obterAcessoriosEBebidas();
+        acessoriosEBebidas.forEach(acessorio -> 
+            salgadosSemCarneText.append(acessorio + "\n")
+        );
      // Exibe agregados de salgados
         Map<String, Double> agregadosSalgados = simulacao.obterQuantidadesAgregadosSalgado();
         agregadosSalgados.forEach((nome, quantidade) -> salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n"));
