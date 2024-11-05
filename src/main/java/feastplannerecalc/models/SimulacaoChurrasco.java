@@ -295,6 +295,28 @@ public class SimulacaoChurrasco {
         return comidasSelecionadas;
     }
     
+    public Map<String, Double> calcularQuantidadesAgregados(int totalPessoas) {
+        List<Comida> comidasSelecionadas = carregarAproveitamento(this); // Usando método que já filtra selecionados
+        Map<String, Double> quantidadesAgregados = new HashMap<>();
+
+        for (Comida agregado : comidasSelecionadas) {
+            if (getAgregados().contains(agregado.getNome())) { // Verifica se o item é um agregado
+                double quantidadeAjustada = totalPessoas / agregado.getAproveitamento();
+                quantidadesAgregados.put(agregado.getNome(), quantidadeAjustada);
+            }
+        }
+
+        return quantidadesAgregados;
+    }
+
+    public Map<String, Double> obterQuantidadesAgregados() {
+        return calcularQuantidadesAgregados(this.getTotalPessoas()); // Supondo que temos um método `getTotalPessoas`
+    }
+    
+    public int getTotalPessoas() {
+        return homens + mulheres + comiloes + criancas + vegetarianos;
+    }
+
     
 
 }

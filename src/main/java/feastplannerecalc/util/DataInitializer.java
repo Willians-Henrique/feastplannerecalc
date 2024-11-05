@@ -176,17 +176,17 @@ public class DataInitializer {
             new Object[]{"Lombo Suíno", 1, 5, 0, false, 1.0},
             new Object[]{"Linguiça", 1, 5, 0, false, 1.0},
             new Object[]{"Paleta", 1, 5, 0, false, 1.0},
-            new Object[]{"Arroz", 1, 6, 0, false, 1.0},
-            new Object[]{"Farofa", 1, 6, 0, false, 1.0},
-            new Object[]{"Vinagrete", 1, 6, 0, false, 1.0},
+            new Object[]{"Arroz", 1, 6, 0, false, 10.0},
+            new Object[]{"Farofa", 1, 6, 0, false, 10.0},
+            new Object[]{"Vinagrete", 1, 6, 0, false, 10.0},
             new Object[]{"Coração de Frango", 1, 6, 0, false, 1.0},
             new Object[]{"Pão de Alho", 1, 6, 0, false, 1.0},
             new Object[]{"Pão Francês", 1, 6, 0, false, 1.0},
-            new Object[]{"Queijo Coalho", 1, 6, 0, false, 1.0},
-            new Object[]{"Carvão", 1, 6, 0, false, 1.5},
-            new Object[]{"Copo", 3, 0, 0, false, 5.0},
-            new Object[]{"Prato", 3, 0, 0, false, 5.0},
-            new Object[]{"Papel Toalha", 3, 0, 0, false, 10.0}
+            new Object[]{"Queijo Coalho", 1, 6, 0, false, 2.0},
+            new Object[]{"Carvão", 1, 6, 0, false, 0.67},
+            new Object[]{"Copo", 3, 0, 0, false, 0.2},
+            new Object[]{"Prato", 3, 0, 0, false, 0.2},
+            new Object[]{"Papel Toalha", 3, 0, 0, false, 0.1}
         );
 
      // Verifica se já existem registros

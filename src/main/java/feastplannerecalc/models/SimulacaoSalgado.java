@@ -3,7 +3,9 @@ package feastplannerecalc.models;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
 
 public class SimulacaoSalgado {
@@ -192,5 +194,32 @@ public class SimulacaoSalgado {
         // acessoriosEBebidas.add("Cerveja: " + quantidadeCerveja + " L");
         return acessoriosEBebidas;
     }
+    
+    public Map<String, Double> calcularQuantidadesAgregadosSalgado() {
+    	List<Comida> comidasSelecionadas = Comida.carregarTodasComidas(); // Carrega todas as comidas do banco
+        Map<String, Double> quantidadesAgregados = new HashMap<>();
+        int totalPessoas = getTotalPessoas(); // Utiliza o método para obter o total de pessoas
+
+        for (Comida agregado : comidasSelecionadas) {
+            if (getAgregados().contains(agregado.getNome())) { // Verifica se o item é um agregado
+                double quantidadeAjustada = totalPessoas / agregado.getAproveitamento();
+                quantidadesAgregados.put(agregado.getNome(), quantidadeAjustada);
+            }
+        }
+
+        return quantidadesAgregados;
+    }
+  
+    public Map<String, Double> obterQuantidadesAgregadosSalgado() {
+        return calcularQuantidadesAgregadosSalgado(); // Chama o método que calcula as quantidades
+    }
+
+   
+
+    // Método para calcular o total de pessoas em SimulacaoSalgado
+    public int getTotalPessoas() {
+        return homens + mulheres + comiloes + criancas + vegetarianos;
+    }
+
 
 }

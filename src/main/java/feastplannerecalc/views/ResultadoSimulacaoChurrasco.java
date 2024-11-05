@@ -72,6 +72,10 @@ public class ResultadoSimulacaoChurrasco {
         Map<String, Double> carnesFrango = simulacao.obterCarnesFrango();
         carnesFrango.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " kg\n"));
         
+     // Exibe agregados calculados
+        Map<String, Double> agregados = simulacao.obterQuantidadesAgregados();
+        agregados.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " unidades\n"));
+        
         carnesAcompanhamentosPanel.add(new JScrollPane(carnesAcompanhamentosText), BorderLayout.CENTER);
 
         // Quadro direito: Bebidas e Acessórios (Exemplos visuais)

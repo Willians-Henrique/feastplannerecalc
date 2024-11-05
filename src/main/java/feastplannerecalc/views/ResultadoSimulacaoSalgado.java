@@ -72,6 +72,11 @@ public class ResultadoSimulacaoSalgado {
         for (String acessorio : simulacao.obterAcessoriosEBebidas()) {
             salgadosSemCarneText.append(acessorio + "\n");
         }
+     // Exibe agregados de salgados
+        Map<String, Double> agregadosSalgados = simulacao.obterQuantidadesAgregadosSalgado();
+        agregadosSalgados.forEach((nome, quantidade) -> salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n"));
+
+        
         
         salgadosSemCarnePanel.add(new JScrollPane(salgadosSemCarneText), BorderLayout.CENTER);
 
