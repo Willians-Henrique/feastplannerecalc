@@ -1,5 +1,12 @@
 package feastplannerecalc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import feastplannerecalc.database.HibernateUtil;
 import jakarta.persistence.*;
 
 /**
@@ -104,4 +111,32 @@ public class BebidaQuantidadePadrao {
     public void setQuantidade(Integer quantidade) {
         this.quantidade = quantidade;
     }
+    
+    public static List<BebidaQuantidadePadrao> carregarTodasBebidas() {
+        List<BebidaQuantidadePadrao> listaBebidas = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaBebidas = session.createQuery("FROM BebidaQuantidadePadrao", BebidaQuantidadePadrao.class).list();
+            transaction.commit();
+            
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return listaBebidas;
+    }
+    @Override
+    public String toString() {
+        return "Bebida: " + bebida.getBebida() + ", Quantidade Padrão por Pessoa: " + quantidade + " ml";
+    }
+
+    
 }
