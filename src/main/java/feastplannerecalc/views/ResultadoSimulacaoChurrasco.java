@@ -72,10 +72,6 @@ public class ResultadoSimulacaoChurrasco {
         Map<String, Double> carnesFrango = simulacao.obterCarnesFrango();
         carnesFrango.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " kg\n"));
         
-     // Exibe agregados calculados
-        Map<String, Double> agregados = simulacao.obterQuantidadesAgregados();
-        agregados.forEach((nome, quantidade) -> carnesAcompanhamentosText.append(nome + ": " + quantidade + " unidades\n"));
-        
         carnesAcompanhamentosPanel.add(new JScrollPane(carnesAcompanhamentosText), BorderLayout.CENTER);
 
         // Quadro direito: Bebidas e Acessórios (Exemplos visuais)
@@ -85,11 +81,15 @@ public class ResultadoSimulacaoChurrasco {
 
         JTextArea bebidasAcessoriosText = new JTextArea(10, 30);
         bebidasAcessoriosText.setEditable(false);
-        bebidasAcessoriosText.append("Cerveja: 10 L\n");
-        bebidasAcessoriosText.append("Refrigerante: 5 L\n");
-        bebidasAcessoriosText.append("Copo: 50 unidades\n");
-        bebidasAcessoriosText.append("Prato: 30 unidades\n");
-        bebidasAcessoriosText.append("Papel Toalha: 3 rolos\n");
+
+        // Exibe agregados calculados
+        Map<String, Double> agregados = simulacao.obterQuantidadesAgregados();
+        agregados.forEach((nome, quantidade) -> bebidasAcessoriosText.append(nome + ": " + quantidade + " unidades\n"));
+     
+        // Exibe bebidas calculados
+        Map<String, Double> bebidasNecessarias = simulacao.obterBebidasSelecionadas();
+        bebidasNecessarias.forEach((nome, quantidade) -> bebidasAcessoriosText.append(nome + ": " + quantidade + " litros\n"));
+        
         bebidasAcessoriosPanel.add(new JScrollPane(bebidasAcessoriosText), BorderLayout.CENTER);
 
         // Adiciona os quadros ao painel principal

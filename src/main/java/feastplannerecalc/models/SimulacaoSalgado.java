@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import feastplannerecalc.model.BebidaQuantidadePadrao;
 import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
 
@@ -232,7 +233,44 @@ public class SimulacaoSalgado {
         return calcularQuantidadesAgregadosSalgado(); // Chama o método que calcula as quantidades
     }
 
+    public Map<String, Double> calcularQuantidadesBebidasSelecionadas() {
+        // Carrega todas as bebidas e suas quantidades padrão por pessoa
+        List<BebidaQuantidadePadrao> listaBebidas = BebidaQuantidadePadrao.carregarTodasBebidas(); // Carrega bebidas
+        Map<String, Double> bebidasSelecionadasQuantidade = new HashMap<>();
+        
+        // Total de pessoas
+        int totalPessoas = getTotalPessoas();
+        System.out.println("Total de Pessoas: " + totalPessoas); // Debug: Confirma o total de pessoas
+        
+        // Cria uma lista única com as bebidas selecionadas, sem e com álcool
+        List<String> bebidasSelecionadas = new ArrayList<>();
+        bebidasSelecionadas.addAll(this.bebidasSemAlcool != null ? this.bebidasSemAlcool : new ArrayList<>());
+        bebidasSelecionadas.addAll(this.bebidasComAlcool != null ? this.bebidasComAlcool : new ArrayList<>());
+        
+        System.out.println("Bebidas Selecionadas: " + bebidasSelecionadas);  // Debug: Verifica bebidas selecionadas
+        
+        // Itera sobre todas as bebidas carregadas e verifica se estão na lista de selecionadas
+        for (BebidaQuantidadePadrao bebida : listaBebidas) {
+            String nomeBebida = bebida.getBebida().getBebida();  // Obtém o nome da bebida
+            
+            // Verifica se a bebida está na lista de selecionadas
+            if (bebidasSelecionadas.contains(nomeBebida)) {
+                // Calcula a quantidade total de bebida (em litros) para o número total de pessoas
+                double quantidadeTotal = (bebida.getQuantidade() * totalPessoas) / 1000.0;
+                bebidasSelecionadasQuantidade.put(nomeBebida, quantidadeTotal);  // Armazena a quantidade no Map
+                System.out.println("Bebida: " + nomeBebida + ", Quantidade: " + quantidadeTotal + " litros"); // Debug: Exibe a quantidade calculada
+            }
+        }
+
+        return bebidasSelecionadasQuantidade;
+    }
+
+
    
+   public Map<String, Double> obterBebidasSelecionadas() {
+       return calcularQuantidadesBebidasSelecionadas(); // Chama o método que calcula as quantidades
+   }
+
 
     // Método para calcular o total de pessoas em SimulacaoSalgado
     public int getTotalPessoas() {

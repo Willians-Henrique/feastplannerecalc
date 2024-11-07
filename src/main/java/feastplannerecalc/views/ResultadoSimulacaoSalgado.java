@@ -18,11 +18,13 @@ public class ResultadoSimulacaoSalgado {
     private SimulacaoSalgado simulacao;
     
     private List<ComidaQuantidadePadrao> listaQuantidades;
+
     
 
     public ResultadoSimulacaoSalgado(MainWindow mainWindow,SimulacaoSalgado simulacao) {
         this.mainWindow = mainWindow; // Armazena a referência para troca de painéis
         this.simulacao = simulacao; // Inicializa a simulação
+        
 
         
         // Carrega a lista de quantidades de comida padrão
@@ -73,15 +75,17 @@ public class ResultadoSimulacaoSalgado {
         salgadosSemCarne.forEach((nome, quantidade) -> 
             salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n")
         );
-        List<String> acessoriosEBebidas = simulacao.obterAcessoriosEBebidas();
-        acessoriosEBebidas.forEach(acessorio -> 
-            salgadosSemCarneText.append(acessorio + "\n")
-        );
+
      // Exibe agregados de salgados
         Map<String, Double> agregadosSalgados = simulacao.obterQuantidadesAgregadosSalgado();
-        agregadosSalgados.forEach((nome, quantidade) -> salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n"));
+        agregadosSalgados.forEach((nome, quantidade) -> 
+        salgadosSemCarneText.append(nome + ": " + quantidade + " unidades\n"));
 
-        
+        Map<String, Double> bebidasNecessarias = simulacao.obterBebidasSelecionadas();
+        bebidasNecessarias.forEach((nome, quantidade) -> 
+            salgadosSemCarneText.append(nome + ": " + quantidade + " litros\n")
+        );
+
         
         salgadosSemCarnePanel.add(new JScrollPane(salgadosSemCarneText), BorderLayout.CENTER);
 

@@ -165,9 +165,6 @@ public class SimulacaoBebidas extends JPanel {
 	                    ex.printStackTrace();
 	                    System.out.println("Erro ao salvar a simulação no banco: " + ex.getMessage());
 	                }
-
-	                // Trocar para o painel de resultado da simulação de Salgado
-	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow,simulacao).getPanel());
 	            
 	             // Adicionar bebidas sem alcool selecionadas
 	    	        List<String> bebidasSemAlcool = new ArrayList<>();
@@ -190,13 +187,16 @@ public class SimulacaoBebidas extends JPanel {
 	    	        if (vodkaCheckBox.isSelected()) bebidasComAlcool.add("Vodka");
 	    	        if (drinkCheckBox.isSelected()) bebidasComAlcool.add("Drink");
 	    	        
-	    	        simulacao.setBebidasSemAlcool(bebidasComAlcool);
+	    	        simulacao.setBebidasComAlcool(bebidasComAlcool);
 	    	        
 	    	     // Loop para exibir bebidas com álcool no console
 	    	        System.out.println("Bebidas Com Álcool Selecionadas:");
 	    	        for (String bebida : bebidasComAlcool) {
 	    	            System.out.println("- " + bebida);
 	    	        }
+	    	        
+	                // Trocar para o painel de resultado da simulação de Salgado
+	                mainWindow.showPanel(new ResultadoSimulacaoSalgado(mainWindow,simulacao).getPanel());
 	            }
 	        });
 
