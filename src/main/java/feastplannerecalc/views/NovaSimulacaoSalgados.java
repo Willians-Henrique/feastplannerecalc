@@ -22,7 +22,7 @@ public class NovaSimulacaoSalgados extends JPanel {
     private JTextField mulheresTextField;
     private JTextField comiloesTextField;
     private JTextField criancasTextField;
-    private JTextField vegetarianosTextField;
+   // private JTextField vegetarianosTextField;
 
   //JCheckBoxes para capturar as opcoes de agregados
     private JCheckBox arrozCheckbox;
@@ -112,20 +112,20 @@ public class NovaSimulacaoSalgados extends JPanel {
 
 
         // Terceira Linha: Pessoas que Não Comem Carne
-        gbcPessoas.gridy = 4; // Linha 4
-        gbcPessoas.gridx = 0;
-        gbcPessoas.gridwidth = 2;
-        gbcPessoas.insets = new Insets(10, 10, 10, 10); // Adiciona espaço extra
-        JLabel vegetarianosLabel = new JLabel("<html>Quantidade de Pessoas<br>que Não Comem Carne:</html>");
-        pessoasPanel.add(vegetarianosLabel, gbcPessoas);
+//        gbcPessoas.gridy = 4; // Linha 4
+  //      gbcPessoas.gridx = 0;
+    //    gbcPessoas.gridwidth = 2;
+     //   gbcPessoas.insets = new Insets(10, 10, 10, 10); // Adiciona espaço extra
+       // JLabel vegetarianosLabel = new JLabel("<html>Quantidade de Pessoas<br>que Não Comem Carne:</html>");
+        //pessoasPanel.add(vegetarianosLabel, gbcPessoas);
 
-        gbcPessoas.gridy = 5; // Linha 5
-        gbcPessoas.gridx = 0;
-        gbcPessoas.gridwidth = 2;
-        gbcPessoas.fill = GridBagConstraints.HORIZONTAL;
+//        gbcPessoas.gridy = 5; // Linha 5
+  //      gbcPessoas.gridx = 0;
+    //    gbcPessoas.gridwidth = 2;
+      //  gbcPessoas.fill = GridBagConstraints.HORIZONTAL;
         // Inicializando vegetarianosTextField
-        this.vegetarianosTextField = new JTextField(3);
-        pessoasPanel.add(this.vegetarianosTextField, gbcPessoas);
+        //this.vegetarianosTextField = new JTextField(3);
+//        pessoasPanel.add(this.vegetarianosTextField, gbcPessoas);
 
         // Parte inferior: Agregados
         JPanel agregadosPanel = new JPanel(new GridBagLayout());
@@ -273,7 +273,7 @@ public class NovaSimulacaoSalgados extends JPanel {
     	            simulacao.setMulheres(Integer.parseInt(mulheresTextField.getText()));
     	            simulacao.setComiloes(Integer.parseInt(comiloesTextField.getText()));
     	            simulacao.setCriancas(Integer.parseInt(criancasTextField.getText()));
-    	            simulacao.setVegetarianos(Integer.parseInt(vegetarianosTextField.getText()));
+    	            //simulacao.setVegetarianos(Integer.parseInt(vegetarianosTextField.getText()));
     	        } catch (NumberFormatException ex) {
     	            System.out.println("Erro ao converter número: " + ex.getMessage());
     	        }
@@ -319,7 +319,7 @@ public class NovaSimulacaoSalgados extends JPanel {
     	        System.out.println("Mulheres: " + simulacao.getMulheres());
     	        System.out.println("Comilões: " + simulacao.getComiloes());
     	        System.out.println("Crianças: " + simulacao.getCriancas());
-    	        System.out.println("Vegetarianos: " + simulacao.getVegetarianos());
+    	      //  System.out.println("Vegetarianos: " + simulacao.getVegetarianos());
 
     	        System.out.println("Salgados Selecionadas:");
     	        for (String salgado : salgadosAssados) {

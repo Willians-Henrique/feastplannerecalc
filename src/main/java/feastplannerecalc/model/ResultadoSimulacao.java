@@ -59,8 +59,8 @@ public class ResultadoSimulacao {
      * Quantidade de pessoas que não comem carne presentes no evento.
      * Este campo é obrigatório.
      */
-    @Column(name = "quantidade_nao_comem_carne", nullable = false)
-    private Integer quantidadeNaoComemCarne;
+   // @Column(name = "quantidade_nao_comem_carne", nullable = false)
+   // private Integer quantidadeNaoComemCarne;
 
     // Getters e Setters
 
@@ -177,16 +177,16 @@ public class ResultadoSimulacao {
      * 
      * @return quantidade de pessoas que não comem carne.
      */
-    public Integer getQuantidadeNaoComemCarne() {
-        return quantidadeNaoComemCarne;
-    }
+   // public Integer getQuantidadeNaoComemCarne() {
+  //      return quantidadeNaoComemCarne;
+  //  }
 
     /**
      * Define a quantidade de pessoas que não comem carne no evento.
      * 
      * @param quantidadeNaoComemCarne Nova quantidade de pessoas que não comem carne.
      */
-    public void setQuantidadeNaoComemCarne(Integer quantidadeNaoComemCarne) {
-        this.quantidadeNaoComemCarne = quantidadeNaoComemCarne;
-    }
+  //  public void setQuantidadeNaoComemCarne(Integer quantidadeNaoComemCarne) {
+     //   this.quantidadeNaoComemCarne = quantidadeNaoComemCarne;
+   // }
 }

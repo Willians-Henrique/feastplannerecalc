@@ -15,7 +15,7 @@ public class SimulacaoChurrasco {
     private int mulheres;
     private int comiloes;
     private int criancas;
-    private int vegetarianos;
+   // private int vegetarianos;
     
     private List<String> bovinoComOsso;
     private List<String> bovinoSemOsso;
@@ -66,13 +66,13 @@ public class SimulacaoChurrasco {
         this.criancas = criancas;
     }
 
-    public int getVegetarianos() {
-        return vegetarianos;
-    }
+    //public int getVegetarianos() {
+   //     return vegetarianos;
+   // }
 
-    public void setVegetarianos(int vegetarianos) {
-        this.vegetarianos = vegetarianos;
-    }
+    //public void setVegetarianos(int vegetarianos) {
+  //      this.vegetarianos = vegetarianos;
+  //  }
 
     public List<String> getBovinoComOsso() {
         return bovinoComOsso;
@@ -371,7 +371,7 @@ public class SimulacaoChurrasco {
    }
     
     public int getTotalPessoas() {
-        return homens + mulheres + comiloes + criancas + vegetarianos;
+        return homens + mulheres + comiloes + criancas;
     }
 
     

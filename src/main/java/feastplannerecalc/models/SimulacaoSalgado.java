@@ -15,7 +15,7 @@ public class SimulacaoSalgado {
     private int mulheres;
     private int comiloes;
     private int criancas;
-    private int vegetarianos;
+    //private int vegetarianos;
     
     private List<String> salgadosAssados;
     private List<String> salgadosFritos;
@@ -62,13 +62,13 @@ public class SimulacaoSalgado {
         this.criancas = criancas;
     }
 
-    public int getVegetarianos() {
-        return vegetarianos;
-    }
+   // public int getVegetarianos() {
+     //   return vegetarianos;
+    //}
 
-    public void setVegetarianos(int vegetarianos) {
-        this.vegetarianos = vegetarianos;
-    }
+   // public void setVegetarianos(int vegetarianos) {
+    //    this.vegetarianos = vegetarianos;
+   // }
 
     public List<String> getSalgadosAssados() {
         return salgadosAssados;
@@ -274,7 +274,7 @@ public class SimulacaoSalgado {
 
     // Método para calcular o total de pessoas em SimulacaoSalgado
     public int getTotalPessoas() {
-        return homens + mulheres + comiloes + criancas + vegetarianos;
+        return homens + mulheres + comiloes + criancas;
     }
 
 

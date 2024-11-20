@@ -52,7 +52,7 @@ public class HibernateUtil {
                 configuration.addAnnotatedClass(ComidaCategoriaSalgado.class);
                 configuration.addAnnotatedClass(ComidaQuantidadePadrao.class);
                 configuration.addAnnotatedClass(ComidaTipo.class);
-                configuration.addAnnotatedClass(Pessoa.class);
+               // configuration.addAnnotatedClass(Pessoa.class);
                 configuration.addAnnotatedClass(PessoaCategoria.class);
 
              // Adiciona as classes que armazenam os resultados das simulações

@@ -21,7 +21,7 @@ public class DataInitializer {
 
     // Método para inicializar todos os dados
     public static void initializeData(Session session) {
-    	initializePessoas(session);
+    //	initializePessoas(session);
         initializePessoasCategoria(session);
         initializeTiposBebida(session);
         initializeBebidas(session);

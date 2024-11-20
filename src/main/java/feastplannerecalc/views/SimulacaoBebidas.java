@@ -139,7 +139,7 @@ public class SimulacaoBebidas extends JPanel {
 	                resultadoSimulacao.setQuantidadeMulheres(simulacao.getMulheres());
 	                resultadoSimulacao.setQuantidadeCriancas(simulacao.getCriancas());
 	                resultadoSimulacao.setQuantidadeComiloes(simulacao.getComiloes());
-	                resultadoSimulacao.setQuantidadeNaoComemCarne(simulacao.getVegetarianos());
+	                //resultadoSimulacao.setQuantidadeNaoComemCarne(simulacao.getVegetarianos());
 	                
 	                // Defina o tipo de comida (por exemplo, Salgado) para a simulação atual
 	                ComidaTipo tipoComida = new ComidaTipo(); // Assumindo que você tenha uma lógica para definir o tipo
