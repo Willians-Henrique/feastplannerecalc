@@ -43,6 +43,11 @@ public class ResultadoSimulacaoChurrasco {
         simulacao.calcularDistribuicaoCarnes(quantidadeTotalCarne);
         
 
+        // Chama a função para salvar os dados no banco de dados
+        simulacao.salvarResultadoNoBancoDeDados();
+        
+        
+        
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
 

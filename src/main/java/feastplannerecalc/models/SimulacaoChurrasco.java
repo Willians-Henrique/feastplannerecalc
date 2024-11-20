@@ -5,9 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import feastplannerecalc.database.HibernateUtil;
 import feastplannerecalc.model.BebidaQuantidadePadrao;
 import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
+import feastplannerecalc.model.ResultadoChurrasco;
+import feastplannerecalc.model.ResultadoSimulacao;
 
 public class SimulacaoChurrasco {
 
@@ -374,6 +380,83 @@ public class SimulacaoChurrasco {
         return homens + mulheres + comiloes + criancas;
     }
 
-    
+    public void salvarResultadoNoBancoDeDados() {
+        // Inicia uma sessão Hibernate
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+ 
+            // Cria um novo objeto ResultadoChurrasco
+            ResultadoChurrasco resultado = new ResultadoChurrasco();
+
+            // Configura a simulação relacionada
+            ResultadoSimulacao simulacao = new ResultadoSimulacao();
+            simulacao.setId(1L); // Atualize com o ID real da simulação, se necessário
+            resultado.setSimulacao(simulacao);
+
+            // Obtém os dados de salgados com carne e popula os campos
+            Map<String, Double> salgadosComCarne = this.obterCarnesComOsso();
+            resultado.setCostelaBovina(salgadosComCarne.getOrDefault("Costela Bovina", 0.0).doubleValue());
+            resultado.setPrimeRib(salgadosComCarne.getOrDefault("Prime Rib", 0.0).doubleValue());
+            resultado.setChuletaPaulista(salgadosComCarne.getOrDefault("Chuleta Paulista", 0.0).doubleValue());
+            resultado.setCostelaSuina(salgadosComCarne.getOrDefault("Costela Suína", 0.0).doubleValue());
+            resultado.setBisteca(salgadosComCarne.getOrDefault("Bisteca Suína", 0.0).doubleValue());
+            resultado.setPernilComOsso(salgadosComCarne.getOrDefault("Pernil com Osso", 0.0).doubleValue());
+
+
+            // Obtém os dados de salgados sem carne e popula os campos
+            Map<String, Double> carnesSemOsso = this.obterCarnesSemOsso();
+            resultado.setPicanha(carnesSemOsso.getOrDefault("Picanha", 0.0).doubleValue());
+            resultado.setCoxaoMole(carnesSemOsso.getOrDefault("Coxão Mole", 0.0).doubleValue());
+            resultado.setAlcatra(carnesSemOsso.getOrDefault("Alcatra", 0.0).doubleValue());
+            resultado.setFraldinha(carnesSemOsso.getOrDefault("Fraldinha", 0.0).doubleValue());
+            resultado.setContraFile(carnesSemOsso.getOrDefault("Contra Filé", 0.0).doubleValue());
+            resultado.setFileMignon(carnesSemOsso.getOrDefault("Filé Mignon", 0.0).doubleValue());
+            resultado.setPicanhaSuina(carnesSemOsso.getOrDefault("Picanha Suína", 0.0).doubleValue());
+            resultado.setLombo(carnesSemOsso.getOrDefault("Lombo", 0.0).doubleValue());
+            resultado.setLinguica(carnesSemOsso.getOrDefault("Linguiça", 0.0).doubleValue());
+            resultado.setPaleta(carnesSemOsso.getOrDefault("Paleta", 0.0).doubleValue());
+
+            
+            // Obtém os dados de carnes de frango  e popula os campos
+            Map<String, Double> carnesFrango = this.obterCarnesFrango();
+            resultado.setAsinhaComCoxinha(carnesFrango.getOrDefault("Asinha com Coxinha", 0.0).doubleValue());
+            resultado.setTulipaDaAsa(carnesFrango.getOrDefault("Tulipa da Asa", 0.0).doubleValue());
+            resultado.setCoxaComSobrecoxa(carnesFrango.getOrDefault("Coxa com Sobrecoxa", 0.0).doubleValue());
+            
+            // Adiciona os agregados
+            Map<String, Double> agregados = this.obterQuantidadesAgregados();
+            resultado.setArroz(agregados.getOrDefault("Arroz", 0.0));
+            resultado.setFarofa(agregados.getOrDefault("Farofa", 0.0));
+            resultado.setVinagrete(agregados.getOrDefault("Vinagrete", 0.0));
+            resultado.setCoracaoFrango(agregados.getOrDefault("Coração de Frango", 0.0));
+            resultado.setPaoAlho(agregados.getOrDefault("Pão de Alho", 0.0));
+            resultado.setPaoFrances(agregados.getOrDefault("Pão Francês", 0.0));
+            resultado.setQueijoCoalho(agregados.getOrDefault("Queijo Coalho", 0.0));
+
+            // Configura os itens obrigatórios
+            resultado.setCopo(100.0); // Quantidade genérica, ajuste conforme a lógica
+            resultado.setPrato(100.0);
+            resultado.setPapelToalha(2.0); // Exemplo de quantidade de rolos
+            resultado.setCarvao(2.0);
+         
+
+            // Persiste o objeto no banco de dados
+            session.persist(resultado);
+
+            // Confirma a transação
+            transaction.commit();
+
+            System.out.println("Dados salvos com sucesso no banco de dados!");
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
 
 }

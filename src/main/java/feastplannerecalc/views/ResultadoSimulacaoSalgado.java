@@ -36,6 +36,10 @@ public class ResultadoSimulacaoSalgado {
         // Chama a função para calcular e visualizar a distribuição das carnes no console
         simulacao.calcularDistribuicaoSalgados(quantidadeTotalSalgado);
         
+
+     // Chama a função para salvar os dados no banco de dados
+        simulacao.salvarResultadoNoBancoDeDados();
+        
         
         panel = new JPanel();
         panel.setLayout(new BorderLayout());

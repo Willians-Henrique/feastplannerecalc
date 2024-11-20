@@ -4,10 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import feastplannerecalc.database.HibernateUtil;
 import feastplannerecalc.model.BebidaQuantidadePadrao;
 import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
+import feastplannerecalc.model.ResultadoSalgado;
+import feastplannerecalc.model.ResultadoSimulacao;
 
 public class SimulacaoSalgado {
 
@@ -276,6 +281,76 @@ public class SimulacaoSalgado {
     public int getTotalPessoas() {
         return homens + mulheres + comiloes + criancas;
     }
+
+    public void salvarResultadoNoBancoDeDados() {
+        // Inicia uma sessão Hibernate
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            // Cria um novo objeto ResultadoSalgado
+            ResultadoSalgado resultado = new ResultadoSalgado();
+
+            // Configura a simulação relacionada
+            ResultadoSimulacao simulacao = new ResultadoSimulacao();
+            simulacao.setId(1L); // Atualize com o ID real da simulação, se necessário
+            resultado.setSimulacao(simulacao);
+
+            // Obtém os dados de salgados com carne e popula os campos
+            Map<String, Integer> salgadosComCarne = this.obterSalgadosComCarne();
+            resultado.setPizza(salgadosComCarne.getOrDefault("Pizza", 0).doubleValue());
+            resultado.setEsfirra(salgadosComCarne.getOrDefault("Esfirra", 0).doubleValue());
+            resultado.setHamburger(salgadosComCarne.getOrDefault("Hamburger", 0).doubleValue());
+            resultado.setEmpadinha(salgadosComCarne.getOrDefault("Empadinha", 0).doubleValue());
+            resultado.setCoxinha(salgadosComCarne.getOrDefault("Coxinha", 0).doubleValue());
+            resultado.setKibe(salgadosComCarne.getOrDefault("Kibe", 0).doubleValue());
+            resultado.setPastel(salgadosComCarne.getOrDefault("Pastel", 0).doubleValue());
+            resultado.setRisoles(salgadosComCarne.getOrDefault("Risoles", 0).doubleValue());
+            resultado.setCigarrete(salgadosComCarne.getOrDefault("Cigarrete", 0).doubleValue());
+            resultado.setCroquete(salgadosComCarne.getOrDefault("Croquete", 0).doubleValue());
+
+
+            // Obtém os dados de salgados sem carne e popula os campos
+            Map<String, Integer> salgadosSemCarne = this.obterSalgadosSemCarne();
+            resultado.setPizzaDeQueijo(salgadosSemCarne.getOrDefault("Pizza de Queijo", 0).doubleValue());
+            resultado.setEsfirraDeQueijo(salgadosSemCarne.getOrDefault("Esfirra de Queijo", 0).doubleValue());
+            resultado.setEmpadinhaDeQueijo(salgadosSemCarne.getOrDefault("Empadinha de Queijo", 0).doubleValue());
+            resultado.setPastelDeQueijo(salgadosSemCarne.getOrDefault("Pastel de Queijo", 0).doubleValue());
+            resultado.setBolinhaDeQueijo(salgadosSemCarne.getOrDefault("Bolinha de Queijo", 0).doubleValue());
+            resultado.setCigarreteDeQueijo(salgadosSemCarne.getOrDefault("Cigarette de Queijo", 0).doubleValue());
+
+            // Adiciona os agregados
+            Map<String, Double> agregados = this.obterQuantidadesAgregadosSalgado();
+            resultado.setArroz(agregados.getOrDefault("Arroz", 0.0));
+            resultado.setFarofa(agregados.getOrDefault("Farofa", 0.0));
+            resultado.setVinagrete(agregados.getOrDefault("Vinagrete", 0.0));
+            resultado.setPaoAlho(agregados.getOrDefault("Pão de Alho", 0.0));
+            resultado.setPaoFrances(agregados.getOrDefault("Pão Francês", 0.0));
+            resultado.setQueijoCoalho(agregados.getOrDefault("Queijo Coalho", 0.0));
+
+            // Configura os itens obrigatórios
+            resultado.setCopo(100.0); // Quantidade genérica, ajuste conforme a lógica
+            resultado.setPrato(100.0);
+            resultado.setPapelToalha(2.0); // Exemplo de quantidade de rolos
+
+            // Persiste o objeto no banco de dados
+            session.persist(resultado);
+
+            // Confirma a transação
+            transaction.commit();
+
+            System.out.println("Dados salvos com sucesso no banco de dados!");
+
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
 
 
 }

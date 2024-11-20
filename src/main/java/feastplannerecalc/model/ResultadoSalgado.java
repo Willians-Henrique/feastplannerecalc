@@ -68,11 +68,11 @@ public class ResultadoSalgado {
     @Column(name = "risoles", nullable = false)
     private Double risoles;
     
-    @Column(name = "cigarette", nullable = false)
-    private Double cigarette;
+    @Column(name = "cigarrete", nullable = false)
+    private Double cigarrete;
     
-    @Column(name = "cigarette_queijo", nullable = false)
-    private Double cigaretteDeQueijo;
+    @Column(name = "cigarrete_queijo", nullable = false)
+    private Double cigarreteDeQueijo;
 
     @Column(name = "croquete", nullable = false)
     private Double croquete;
@@ -227,20 +227,20 @@ public class ResultadoSalgado {
         this.risoles = risoles;
     }
 
-    public Double getCigaretteDeQueijo() {
-        return cigaretteDeQueijo;
+    public Double getCigarreteDeQueijo() {
+        return cigarreteDeQueijo;
     }
 
-    public void setCigaretteDeQueijo(Double cigaretteDeQueijo) {
-        this.cigaretteDeQueijo = cigaretteDeQueijo;
+    public void setCigarreteDeQueijo(Double cigaretteDeQueijo) {
+        this.cigarreteDeQueijo = cigaretteDeQueijo;
     }
 
-    public Double getCigarette() {
-        return cigarette;
+    public Double getCigarrete() {
+        return cigarrete;
     }
 
-    public void setCigarette(Double cigarette) {
-        this.cigarette = cigarette;
+    public void setCigarrete(Double cigarrete) {
+        this.cigarrete = cigarrete;
     }
     
     public Double getCroquete() {
