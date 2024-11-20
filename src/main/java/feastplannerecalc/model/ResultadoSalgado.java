@@ -106,6 +106,30 @@ public class ResultadoSalgado {
     @Column(name = "papel_toalha", nullable = false)
     private Double papelToalha;
 
+    @Column(name = "cerveja_sem_alcool", nullable = false)
+    private Double cervejaSemAlcool;
+    
+    @Column(name = "agua", nullable = false)
+    private Double agua;
+    
+    @Column(name = "suco", nullable = false)
+    private Double suco;
+    
+    @Column(name = "refrigerante", nullable = false)
+    private Double refrigerante;
+    
+    @Column(name = "cerveja", nullable = false)
+    private Double cerveja;
+    
+    @Column(name = "vinho", nullable = false)
+    private Double vinho;
+    
+    @Column(name = "vodka", nullable = false)
+    private Double vodka;
+    
+    @Column(name = "drink", nullable = false)
+    private Double drink;
+    
     // Getters e Setters para todas as colunas
     public Long getId() {
         return id;
@@ -322,4 +346,69 @@ public class ResultadoSalgado {
     public void setPapelToalha(Double papelToalha) {
         this.papelToalha = papelToalha;
     }
+    
+    public Double getCervejaSemAlcool() {
+        return cervejaSemAlcool;
+    }
+
+    public void setCervejaSemAlcool(Double cervejaSemAlcool) {
+        this.cervejaSemAlcool = cervejaSemAlcool;
+    }
+
+    public Double getAgua() {
+        return agua;
+    }
+
+    public void setAgua(Double agua) {
+        this.agua = agua;
+    }
+
+    public Double getSuco() {
+        return suco;
+    }
+
+    public void setSuco(Double suco) {
+        this.suco = suco;
+    }
+
+    public Double getRefrigerante() {
+        return refrigerante;
+    }
+
+    public void setRefrigerante(Double refrigerante) {
+        this.refrigerante = refrigerante;
+    }
+
+    public Double getCerveja() {
+        return cerveja;
+    }
+
+    public void setCerveja(Double cerveja) {
+        this.cerveja = cerveja;
+    }
+
+    public Double getVinho() {
+        return vinho;
+    }
+
+    public void setVinho(Double vinho) {
+        this.vinho = vinho;
+    }
+
+    public Double getVodka() {
+        return vodka;
+    }
+
+    public void setVodka(Double vodka) {
+        this.vodka = vodka;
+    }
+
+    public Double getDrink() {
+        return drink;
+    }
+
+    public void setDrink(Double drink) {
+        this.drink = drink;
+    }
+
 }

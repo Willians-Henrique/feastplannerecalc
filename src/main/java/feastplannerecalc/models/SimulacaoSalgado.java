@@ -329,6 +329,17 @@ public class SimulacaoSalgado {
             resultado.setPaoAlho(agregados.getOrDefault("Pão de Alho", 0.0));
             resultado.setPaoFrances(agregados.getOrDefault("Pão Francês", 0.0));
             resultado.setQueijoCoalho(agregados.getOrDefault("Queijo Coalho", 0.0));
+            
+            // Adiciona as bebidas
+            Map<String, Double> bebidas = this.obterBebidasSelecionadas();
+            resultado.setCervejaSemAlcool(bebidas.getOrDefault("Cerveja sem Álcool", 0.0));
+            resultado.setAgua(bebidas.getOrDefault("Água", 0.0));
+            resultado.setSuco(bebidas.getOrDefault("Suco", 0.0));
+            resultado.setRefrigerante(bebidas.getOrDefault("Refrigerante", 0.0));
+            resultado.setCerveja(bebidas.getOrDefault("Cerveja", 0.0));
+            resultado.setVinho(bebidas.getOrDefault("Vinho", 0.0));
+            resultado.setVodka(bebidas.getOrDefault("Vodka", 0.0));
+            resultado.setDrink(bebidas.getOrDefault("Drink", 0.0));
 
             // Configura os itens obrigatórios
             resultado.setCopo(100.0); // Quantidade genérica, ajuste conforme a lógica
