@@ -24,6 +24,8 @@ public class SimulacaoBebidas extends JPanel {
 	private MainWindow mainWindow; // Referência à MainWindow
 	private SimulacaoSalgado simulacao;
 	
+    private static ResultadoSimulacao resultadoSimulacaoGlobal;
+	
 	//JCheckBoxes para capturar as opcoes de bebidas nao alcoolicas
     private JCheckBox cervejaSemAlcoolCheckbox;
     private JCheckBox aguaCheckBox;
@@ -145,8 +147,7 @@ public class SimulacaoBebidas extends JPanel {
 	                ComidaTipo tipoComida = new ComidaTipo(); // Assumindo que você tenha uma lógica para definir o tipo
 	                tipoComida.setId(2L); // chave estrangeira do tipo de construção
 	                resultadoSimulacao.setTipoComida(tipoComida);
-
-
+	                
 
 	                // Envia os dados para o banco de dados usando Jakarta Persistence
 	                try {
@@ -158,7 +159,11 @@ public class SimulacaoBebidas extends JPanel {
 	                    entityManager.persist(resultadoSimulacao); // Salva o resultado da simulação no banco
 
 	                    transaction.commit(); // Confirma a transação
-	                    System.out.println("Simulação salva com sucesso no banco de dados.");
+
+	                    System.out.println("Simulação salva com sucesso. ID: " + resultadoSimulacao.getId());
+	                    
+	                    // Armazena globalmente o resultado da simulação
+	                    SimulacaoBebidas.setResultadoSimulacaoGlobal(resultadoSimulacao);
 	                    
 	                    entityManager.close(); // Fecha o EntityManager
 	                } catch (Exception ex) {
@@ -203,5 +208,13 @@ public class SimulacaoBebidas extends JPanel {
     }
 	public JPanel getPanel() {
         return this; // Retorna o painel para exibição
+    }
+	
+    public static ResultadoSimulacao getResultadoSimulacaoGlobal() {
+        return resultadoSimulacaoGlobal;
+    }
+
+    public static void setResultadoSimulacaoGlobal(ResultadoSimulacao resultado) {
+        resultadoSimulacaoGlobal = resultado;
     }
 }

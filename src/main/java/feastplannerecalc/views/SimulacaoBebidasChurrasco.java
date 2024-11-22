@@ -22,6 +22,8 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private MainWindow mainWindow; // Referência à MainWindow
     private SimulacaoChurrasco simulacao;
+    
+    private static ResultadoSimulacao resultadoSimulacaoGlobal;
 
 	//JCheckBoxes para capturar as opcoes de bebidas nao alcoolicas
     private JCheckBox cervejaSemAlcoolCheckbox;
@@ -139,7 +141,7 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	                resultadoSimulacao.setQuantidadeComiloes(simulacao.getComiloes());
 	               // resultadoSimulacao.setQuantidadeNaoComemCarne(simulacao.getVegetarianos());
 	                
-	                // Defina o tipo de comida (por exemplo, Salgado) para a simulação atual
+	                // Defina o tipo de comida (por exemplo, churrasco) para a simulação atual
 	                ComidaTipo tipoComida = new ComidaTipo(); // Assumindo que você tenha uma lógica para definir o tipo
 	                tipoComida.setId(1L); // chave estrangeira do tipo de construção
 	                resultadoSimulacao.setTipoComida(tipoComida);
@@ -154,14 +156,18 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 	                    entityManager.persist(resultadoSimulacao); // Salva o resultado da simulação no banco
 
 	                    transaction.commit(); // Confirma a transação
-	                    System.out.println("Simulação salva com sucesso no banco de dados.");
+	                    
+	                    System.out.println("Simulação salva com sucesso. ID: " + resultadoSimulacao.getId());
+	                    
+	                    // Armazena globalmente o resultado da simulação
+	                    SimulacaoBebidasChurrasco.setResultadoSimulacaoGlobal(resultadoSimulacao);
 	                    
 	                    entityManager.close(); // Fecha o EntityManager
 	                } catch (Exception ex) {
 	                    ex.printStackTrace();
 	                    System.out.println("Erro ao salvar a simulação no banco: " + ex.getMessage());
 	                }
-// Adicionar bebidas sem alcool selecionadas
+	                // Adicionar bebidas sem alcool selecionadas
 	    	        List<String> bebidasSemAlcool = new ArrayList<>();
 	    	        if (cervejaSemAlcoolCheckbox.isSelected()) bebidasSemAlcool.add("Cerveja Sem Álcool");
 	    	        if (aguaCheckBox.isSelected()) bebidasSemAlcool.add("Água");
@@ -198,10 +204,15 @@ public class SimulacaoBebidasChurrasco extends JPanel {
 
     } 
 	
-
-    
     
 	public JPanel getPanel() {
         return this; // Retorna o painel para exibição
+    }
+	public static ResultadoSimulacao getResultadoSimulacaoGlobal() {
+        return resultadoSimulacaoGlobal;
+    }
+
+    public static void setResultadoSimulacaoGlobal(ResultadoSimulacao resultado) {
+        resultadoSimulacaoGlobal = resultado;
     }
 }

@@ -14,6 +14,7 @@ import feastplannerecalc.model.Comida;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
 import feastplannerecalc.model.ResultadoChurrasco;
 import feastplannerecalc.model.ResultadoSimulacao;
+import feastplannerecalc.views.SimulacaoBebidasChurrasco;
 
 public class SimulacaoChurrasco {
 
@@ -381,6 +382,22 @@ public class SimulacaoChurrasco {
     }
 
     public void salvarResultadoNoBancoDeDados() {
+    	
+    	// Obtém o objeto ResultadoSimulacao global
+        ResultadoSimulacao resultadoSimulacao = SimulacaoBebidasChurrasco.getResultadoSimulacaoGlobal();
+
+        if (resultadoSimulacao == null) {
+            System.out.println("Erro: resultadoSimulacao não está disponível.");
+            return;
+        }
+        
+        // Obtém o ID
+        Long idSimulacao = resultadoSimulacao.getId();
+        
+        if (idSimulacao == null) {
+            System.out.println("Erro: ID da simulação não encontrado!");
+            return;
+        }
         // Inicia uma sessão Hibernate
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -393,7 +410,7 @@ public class SimulacaoChurrasco {
 
             // Configura a simulação relacionada
             ResultadoSimulacao simulacao = new ResultadoSimulacao();
-            simulacao.setId(1L); // Atualize com o ID real da simulação, se necessário
+            simulacao.setId(idSimulacao); // Usa o ID correto
             resultado.setSimulacao(simulacao);
 
             // Obtém os dados de salgados com carne e popula os campos
