@@ -3,6 +3,8 @@ package feastplannerecalc.views;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import feastplannerecalc.model.ResultadoChurrasco;
+import feastplannerecalc.model.ResultadoSalgado;
 import feastplannerecalc.model.ResultadoSimulacao;
 
 import java.awt.*;
@@ -54,17 +56,42 @@ public class ListarSimulacao {
      * Método para carregar os dados reais do banco e imprimir no console.
      */
     private void carregarDadosReais() {
+        // Carrega os resultados de simulação
         List<ResultadoSimulacao> simulacoes = ResultadoSimulacao.carregarResultadosSimulacao();
+        List<ResultadoChurrasco> churrascos = ResultadoChurrasco.carregarResultadosChurrasco();
+        List<ResultadoSalgado> salgados = ResultadoSalgado.carregarResultadosSalgado();
 
         // Imprimir os dados carregados no console
         System.out.println("Dados reais carregados do banco:");
+        
         for (ResultadoSimulacao simulacao : simulacoes) {
+        	
             System.out.println("ID: " + simulacao.getId());
-            System.out.println("Tipo de Comida: " + (simulacao.getTipoComida() != null ? simulacao.getTipoComida().getTipo() : "N/A"));
-            System.out.println("Homens: " + simulacao.getQuantidadeHomens());
-            System.out.println("Mulheres: " + simulacao.getQuantidadeMulheres());
-            System.out.println("Crianças: " + simulacao.getQuantidadeCriancas());
-            System.out.println("Comilões: " + simulacao.getQuantidadeComiloes());
+            
+            // Corrigir a comparação do tipo de comida usando o ID
+            Long tipoComidaId = simulacao.getTipoComida().getId();
+            String tipoSimulacao = (tipoComidaId == 1L) ? "Churrasco" : (tipoComidaId == 2L) ? "Salgado" : "Desconhecido";
+            System.out.println("Tipo de Simulação: " + tipoSimulacao);
+            
+            System.out.println("Quantidade de Pessoas: " +  + (simulacao.getQuantidadeHomens() + simulacao.getQuantidadeMulheres() + simulacao.getQuantidadeCriancas()+ simulacao.getQuantidadeComiloes()));
+
+            // Buscar informações específicas de comida e bebida para cada tipo de simulacao
+            if (tipoComidaId == 1L) { // Churrasco
+                for (ResultadoChurrasco churrasco : churrascos) {
+                    if (churrasco.getSimulacao().getId().equals(simulacao.getId())) {
+                        System.out.println("Quantidade de Comida (Churrasco): " + churrasco.getTotalComida() + " kg");
+                        System.out.println("Quantidade de Bebida (Churrasco): " + churrasco.getTotalBebida() + " L");
+                    }
+                }
+            } else if (tipoComidaId == 2L) { // Salgado
+                for (ResultadoSalgado salgado : salgados) {
+                    if (salgado.getSimulacao().getId().equals(simulacao.getId())) {
+                        System.out.println("Quantidade de Comida (Salgados): " + salgado.getTotalComida() + " unidades");
+                        System.out.println("Quantidade de Bebida (Salgados): " + salgado.getTotalBebida() + " L");
+                    }
+                }
+            }
+
             System.out.println("-----------------------------");
         }
     }
