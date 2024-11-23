@@ -1,6 +1,13 @@
 package feastplannerecalc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+import feastplannerecalc.database.HibernateUtil;
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 	
 /**
  * Classe que armazena o resultado da simulação de salgados.
@@ -129,6 +136,12 @@ public class ResultadoSalgado {
     
     @Column(name = "drink", nullable = false)
     private Double drink;
+    
+    @Column(name = "total_comida", nullable = false)
+    private Double totalComida;
+    
+    @Column(name = "total_bebida", nullable = false)
+    private Double totalBebida;
     
     // Getters e Setters para todas as colunas
     public Long getId() {
@@ -410,5 +423,43 @@ public class ResultadoSalgado {
     public void setDrink(Double drink) {
         this.drink = drink;
     }
+    
+    public Double getTotalComida() {
+        return totalComida;
+    }
 
+    public void setTotalComida(Double totalComida) {
+        this.totalComida = totalComida;
+    }
+    
+    public Double getTotalBebida() {
+        return totalBebida;
+    }
+
+    public void setTotalBebida(Double totalBebida) {
+        this.totalBebida = totalBebida;
+    }
+    
+    public static List<ResultadoSalgado> carregarResultadosSalgado() {
+        List<ResultadoSalgado> listaResultados = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaResultados = session.createQuery("FROM ResultadoSalgado", ResultadoSalgado.class).list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return listaResultados;
+    }
+
+    
 }

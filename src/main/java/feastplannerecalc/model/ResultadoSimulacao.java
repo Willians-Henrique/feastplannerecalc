@@ -1,6 +1,13 @@
 package feastplannerecalc.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
+import feastplannerecalc.database.HibernateUtil;
 import jakarta.persistence.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  * Classe que armazena o resultado da simulação de um evento,
@@ -189,4 +196,26 @@ public class ResultadoSimulacao {
   //  public void setQuantidadeNaoComemCarne(Integer quantidadeNaoComemCarne) {
      //   this.quantidadeNaoComemCarne = quantidadeNaoComemCarne;
    // }
+    
+    public static List<ResultadoSimulacao> carregarResultadosSimulacao() {
+        List<ResultadoSimulacao> listaResultados = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+            listaResultados = session.createQuery("FROM ResultadoSimulacao", ResultadoSimulacao.class).list();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return listaResultados;
+    }
+
 }

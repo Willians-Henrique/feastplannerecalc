@@ -22,6 +22,7 @@ public class SimulacaoChurrasco {
     private int mulheres;
     private int comiloes;
     private int criancas;
+    private double totalAjustadoGlobal = 0.0;
    // private int vegetarianos;
     
     private List<String> bovinoComOsso;
@@ -282,17 +283,20 @@ public class SimulacaoChurrasco {
         return carnesFrangoMap;
     }
 
+ // Método para calcular e imprimir as quantidades ajustadas
     private void imprimirECalcularTotal(List<Double> quantidadesAjustadas) {
-        double totalAjustado = 0.0;
+        totalAjustadoGlobal = 0.0; // Zera antes de calcular
         System.out.println("Quantidades ajustadas por carne:");
 
         for (Double quantidade : quantidadesAjustadas) {
-            totalAjustado += quantidade;
-            System.out.printf("%.3f kg%n", quantidade / 1000); // Divide por 1000 para exibição
+            totalAjustadoGlobal += quantidade;
+            
+            System.out.printf("%.3f kg%n", quantidade/1000); // Divide por 1000 para exibição
         }
-
-        System.out.printf("Quantidade total ajustada de carnes: %.3f kg%n", totalAjustado / 1000);
+        totalAjustadoGlobal /=1000; // Divide por 1000 para exibição
+        System.out.printf("Quantidade total ajustada de carnes: %.3f kg%n", totalAjustadoGlobal);
     }
+
 
 
 
@@ -470,6 +474,11 @@ public class SimulacaoChurrasco {
             resultado.setPapelToalha(2.0); // Exemplo de quantidade de rolos
             resultado.setCarvao(2.0);
          
+            resultado.setTotalComida(totalAjustadoGlobal);
+
+           // Salva o total ajustado de bebidas
+            double totalBebidas = bebidas.values().stream().mapToDouble(Double::doubleValue).sum();
+            resultado.setTotalBebida(totalBebidas);
 
             // Persiste o objeto no banco de dados
             session.persist(resultado);
