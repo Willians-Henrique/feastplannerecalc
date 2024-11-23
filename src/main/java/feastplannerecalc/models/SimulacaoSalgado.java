@@ -21,6 +21,7 @@ public class SimulacaoSalgado {
     private int mulheres;
     private int comiloes;
     private int criancas;
+    private int totalSalgadosArredondado;
     //private int vegetarianos;
     
     private List<String> salgadosAssados;
@@ -162,7 +163,10 @@ public class SimulacaoSalgado {
     public void calcularDistribuicaoSalgados(double quantidadeTotal) {
         // Arredonda a quantidade total de salgados para o próximo múltiplo de 100
         int totalSalgados = (int) Math.ceil(quantidadeTotal / 100) * 100;
-
+        
+        // Armazena o total arredondado na variável global
+        this.totalSalgadosArredondado = totalSalgados;
+        
         // Calcula a quantidade total de centros de 100 salgados
         int centros = totalSalgados / 100;
 
@@ -315,6 +319,10 @@ public class SimulacaoSalgado {
             ResultadoSimulacao simulacao = new ResultadoSimulacao();
             simulacao.setId(idSimulacao); // Usa o ID correto
             resultado.setSimulacao(simulacao);
+            
+
+            // Configura o total de salgados arredondado
+            resultado.setTotalComida(this.totalSalgadosArredondado);
 
             // Obtém os dados de salgados com carne e popula os campos
             Map<String, Integer> salgadosComCarne = this.obterSalgadosComCarne();
@@ -364,6 +372,9 @@ public class SimulacaoSalgado {
             resultado.setPrato(100.0);
             resultado.setPapelToalha(2.0); // Exemplo de quantidade de rolos
 
+            double totalBebidas = bebidas.values().stream().mapToDouble(Double::doubleValue).sum();
+            resultado.setTotalBebida(totalBebidas);
+            
             // Persiste o objeto no banco de dados
             session.persist(resultado);
 

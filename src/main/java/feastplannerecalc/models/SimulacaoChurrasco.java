@@ -23,6 +23,8 @@ public class SimulacaoChurrasco {
     private int comiloes;
     private int criancas;
     private double totalAjustadoGlobal = 0.0;
+
+    
    // private int vegetarianos;
     
     private List<String> bovinoComOsso;

@@ -138,7 +138,7 @@ public class ResultadoSalgado {
     private Double drink;
     
     @Column(name = "total_comida", nullable = false)
-    private Double totalComida;
+    private int totalComida;
     
     @Column(name = "total_bebida", nullable = false)
     private Double totalBebida;
@@ -424,11 +424,11 @@ public class ResultadoSalgado {
         this.drink = drink;
     }
     
-    public Double getTotalComida() {
+    public int getTotalComida() {
         return totalComida;
     }
 
-    public void setTotalComida(Double totalComida) {
+    public void setTotalComida(int totalComida) {
         this.totalComida = totalComida;
     }
     
