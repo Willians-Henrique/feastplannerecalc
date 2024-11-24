@@ -41,6 +41,7 @@ public class MainWindow extends JFrame {
         ToolBarConfig.newSimButton.addActionListener(e -> showPanel(new NovaSimulacao().getPanel()));
         ToolBarConfig.listSimButton.addActionListener(e -> showPanel(new ListarSimulacao().getPanel()));
         ToolBarConfig.settingsButton.addActionListener(e -> showPanel(new Configuracoes().getPanel()));
+        ToolBarConfig.manualButton.addActionListener(e -> showPanel(new Manual().getPanel()));
     }
 
 

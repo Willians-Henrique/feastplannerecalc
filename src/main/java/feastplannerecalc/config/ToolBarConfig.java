@@ -8,6 +8,7 @@ public class ToolBarConfig {
     public static JButton newSimButton = new JButton("Nova Simulação");
     public static JButton listSimButton = new JButton("Listar Simulações");
     public static JButton settingsButton = new JButton("Configurações");
+    public static JButton manualButton = new JButton("Manual");
 
 
     public static JToolBar createToolBar() {
@@ -19,6 +20,7 @@ public class ToolBarConfig {
         toolBar.add(newSimButton);
         toolBar.add(listSimButton);
         toolBar.add(settingsButton);
+        toolBar.add(manualButton);
 
         toolBar.add(Box.createHorizontalGlue());
 
