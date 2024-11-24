@@ -515,5 +515,31 @@ public class ResultadoChurrasco {
 
         return listaResultados;
     }
+    
+    public static void excluirPorSimulacaoId(Long simulacaoId) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String hql = "DELETE FROM ResultadoChurrasco WHERE simulacao.id = :simulacaoId";
+            session.createQuery(hql)
+                   .setParameter("simulacaoId", simulacaoId)
+                   .executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session != null && session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao excluir ResultadoChurrasco: " + e.getMessage(), e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
+
+    
 
 }

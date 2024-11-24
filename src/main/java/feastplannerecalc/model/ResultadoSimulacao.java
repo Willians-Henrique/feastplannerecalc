@@ -217,5 +217,29 @@ public class ResultadoSimulacao {
 
         return listaResultados;
     }
+    
+    public static void excluirPorId(Long id) {
+        Session session = null;
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+
+            String hql = "DELETE FROM ResultadoSimulacao WHERE id = :id";
+            session.createQuery(hql)
+                   .setParameter("id", id)
+                   .executeUpdate();
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session != null && session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            throw new RuntimeException("Erro ao excluir ResultadoSimulacao: " + e.getMessage(), e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+    }
 
 }
