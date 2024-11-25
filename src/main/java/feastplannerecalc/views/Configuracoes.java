@@ -1,8 +1,15 @@
 package feastplannerecalc.views;
 
+import feastplannerecalc.database.HibernateUtil;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
+
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
 import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
@@ -46,11 +53,12 @@ public class Configuracoes {
         JPanel botoesPanel = new JPanel();
         botoesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
-        JButton editarButton = new JButton("Editar");
         JButton salvarButton = new JButton("Salvar");
 
-        // Adicionar os botões ao painel de botões
-        botoesPanel.add(editarButton);
+        // Adicionar a funcionalidade de salvar
+        salvarButton.addActionListener(e -> salvarDados(tabela));
+        
+
         botoesPanel.add(salvarButton);
 
         // Adicionar o painel de botões à parte inferior
@@ -89,6 +97,68 @@ public class Configuracoes {
             e.printStackTrace();
         }
     }
+    
+    private void salvarDados(JTable tabela) {
+        DefaultTableModel model = (DefaultTableModel) tabela.getModel();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = null;
+
+        try {
+            transaction = session.beginTransaction();
+
+            // Iterar sobre as linhas da tabela
+            for (int i = 0; i < model.getRowCount(); i++) {
+                String categoriaNome = (String) model.getValueAt(i, 0);
+                String quantidadeCarneStr = model.getValueAt(i, 1).toString();
+                String quantidadeSalgadoStr = model.getValueAt(i, 2).toString();
+
+                // Converter valores para Integer
+                Integer quantidadeCarne = Integer.parseInt(quantidadeCarneStr);
+                Integer quantidadeSalgado = Integer.parseInt(quantidadeSalgadoStr);
+
+                // Mapear o nome da categoria para o ID
+                Long categoriaId = null;
+                if (categoriaNome.equals("Comilão")) categoriaId = 1L;
+                else if (categoriaNome.equals("Homem")) categoriaId = 2L;
+                else if (categoriaNome.equals("Mulher")) categoriaId = 3L;
+                else if (categoriaNome.equals("Criança")) categoriaId = 4L;
+
+                if (categoriaId != null) {
+                    // Carregar o objeto gerenciado pelo Hibernate
+                    ComidaQuantidadePadrao quantidade = session.get(ComidaQuantidadePadrao.class, categoriaId);
+
+                    if (quantidade != null) {
+                        // Atualizar os valores
+                        quantidade.setQuantidadeCarne(quantidadeCarne);
+                        quantidade.setQuantidadeSalgado(quantidadeSalgado);
+
+                        // Persistir as alterações
+                        session.update(quantidade);
+                    }
+                }
+            }
+
+            // Confirmar a transação
+            transaction.commit();
+            JOptionPane.showMessageDialog(panel, "Dados salvos com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(panel, "Os valores de quantidade devem ser números inteiros.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            JOptionPane.showMessageDialog(panel, "Erro ao salvar dados no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+    }
+
 
     public JPanel getPanel() {
         return panel;
