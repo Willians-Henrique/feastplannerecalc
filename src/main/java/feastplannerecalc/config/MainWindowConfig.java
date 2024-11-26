@@ -38,19 +38,28 @@ public class MainWindowConfig {
         gbcText.weightx = 0.7;
         gbcText.weighty = 1.0;
 
-        JTextArea textArea = new JTextArea("SORTEADOR - A sua calculadora personalizada de eventos \n\n\n\n" +
-                "Este é um sorteador que calcula a quantidade de comida e bebida necessária para seu evento. " +
-                "Pode ser uma comemoração com salgados ou um churrasco. Você poderá escolher bebidas " +
-                "alcoólicas ou não alcoólicas, de acordo com suas preferências.\n\n" +
-                "O sistema considera duas categorias de pessoas: aquelas que comem carne e aquelas que não comem. Para " +
-                "aqueles que não comem carne, serão oferecidas opções vegetarianas. Para quem consome carne, há quatro " +
-                "categorias: comilão, homem, mulher e crianças. Isso ajudará a estimar com maior precisão a quantidade " +
-                "necessária de comida e bebida para o evento com base nas opções selecionadas.");
-        textArea.setWrapStyleWord(true);
-        textArea.setLineWrap(true);
-        textArea.setEditable(false);
-        textArea.setFont(new Font("Arial", Font.PLAIN, 22));
+        JTextArea textArea = new JTextArea(
+        		"FeastPlanner&Calc - A sua calculadora personalizada de eventos\n\n" +
+        			    "Bem-vindo ao FeastPlanner&Calc! Este é uma calculadora para a quantidade de comida e bebida necessária para o seu evento.\n" +
+        			    "Você pode escolher entre opções para um evento com salgados ou churrasco, além de selecionar bebidas alcoólicas ou não alcoólicas, conforme suas preferências.\n\n" +
+        			    "O sistema considera as seguintes categorias de pessoas:\n" +
+        			    "- Comilão\n" +
+        			    "- Homem\n" +
+        			    "- Mulher\n" +
+        			    "- Crianças\n\n" +
+        			    "Além disso, é possível personalizar a quantidade de comida e bebida para cada tipo de pessoa, " +
+        			    "ajustando a quantidade com base nas preferências e necessidades de cada um.\n\n" +
+        			    "Com essas categorias, o FeastPlanner&Calc pode estimar com precisão a quantidade necessária de comida e bebida para seu evento, " +
+        			    "garantindo que todos os convidados sejam bem atendidos e a festa seja um sucesso!"
+        	);
+        	textArea.setWrapStyleWord(true);
+        	textArea.setLineWrap(true);
+        	textArea.setFont(new Font("Arial", Font.PLAIN, 22));
+        	textArea.setBackground(new Color(173, 216, 230));  // Azul claro para o fundo
+        	textArea.setEditable(false);
+        	textArea.setCaretPosition(0); // Para que o texto comece do topo
 
+        
         mainPanel.add(new JScrollPane(textArea), gbcText);
     }
 }

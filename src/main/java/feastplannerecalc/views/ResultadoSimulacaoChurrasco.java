@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ResultadoSimulacaoChurrasco {
+public class ResultadoSimulacaoChurrasco extends JPanel {
+    private static final long serialVersionUID = 1L;
     private JPanel panel;
     private MainWindow mainWindow; // Referência à MainWindow para navegação entre telas
 	private SimulacaoChurrasco simulacao;

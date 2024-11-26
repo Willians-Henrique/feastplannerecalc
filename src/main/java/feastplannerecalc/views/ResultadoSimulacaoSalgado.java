@@ -12,7 +12,8 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Map;
 
-public class ResultadoSimulacaoSalgado {
+public class ResultadoSimulacaoSalgado extends JPanel {
+    private static final long serialVersionUID = 1L;
     private JPanel panel;
     private MainWindow mainWindow; // Referência à MainWindow para navegação entre telas
     private SimulacaoSalgado simulacao;

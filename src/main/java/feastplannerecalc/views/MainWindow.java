@@ -18,6 +18,9 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
         setLayout(new BorderLayout());
+        
+        getContentPane().setBackground(new Color(227, 242, 253)); // Cor azul claro
+
 
         // Configurando a ToolBar e adicionando na parte norte
         JToolBar toolBar = ToolBarConfig.createToolBar();
@@ -25,6 +28,7 @@ public class MainWindow extends JFrame {
 
         // Painel principal onde o conteúdo será trocado
         mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(227, 242, 253)); // Azul claro
         add(mainPanel, BorderLayout.CENTER);
         
         // Configura as ações dos botões da ToolBar
@@ -49,6 +53,8 @@ public class MainWindow extends JFrame {
     public void showPanel(JPanel panel) {
         System.out.println("Mostrando painel: " + panel.getClass().getSimpleName());
         mainPanel.removeAll();
+        // Configura a cor de fundo do painel antes de adicioná-lo
+        panel.setBackground(new Color(227, 242, 253)); // Azul claro
         mainPanel.add(panel, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();

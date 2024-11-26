@@ -2,10 +2,12 @@ package feastplannerecalc.views;
 
 import feastplannerecalc.database.HibernateUtil;
 import feastplannerecalc.model.ComidaQuantidadePadrao;
-
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,16 +17,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Configuracoes {
+public class Configuracoes extends JPanel {
+    private static final long serialVersionUID = 1L;
     private JPanel panel;
 
     public Configuracoes() {
+        // Fundo do painel principal
+        setBackground(new Color(13, 71, 161)); // Azul escuro
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(21, 101, 192)); // Azul médio
 
         // Cabeçalho
-        JLabel label = new JLabel("Painel Configurações", SwingConstants.CENTER);
+        JLabel label = new JLabel(" Configurações", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 24));
+        label.setForeground(Color.BLACK); // Texto branco no título
         panel.add(label, BorderLayout.NORTH);
 
         // Configurar colunas da tabela
@@ -41,20 +48,33 @@ public class Configuracoes {
         // Criar tabela
         JTable tabela = new JTable(model);
         tabela.setRowHeight(30);
+        tabela.setBackground(new Color(144, 202, 249)); // Azul claro para o fundo da tabela
+        tabela.setForeground(Color.BLACK); // Texto preto
+        tabela.setFont(new Font("Arial", Font.PLAIN, 14));
 
+        // Cabeçalho da tabela
+        JTableHeader header = tabela.getTableHeader();
+        header.setBackground(new Color(13, 71, 161)); // Azul escuro
+        header.setForeground(Color.WHITE); // Texto branco
+        header.setFont(new Font("Arial", Font.BOLD, 16));
         // Preencher a tabela com os dados do banco de dados
         carregarDadosNaTabela(model);
 
         // Adicionar tabela ao painel com rolagem
         JScrollPane scrollPane = new JScrollPane(tabela);
+        scrollPane.setBackground(new Color(21, 101, 192)); // Fundo do painel de scroll
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // Painel de botões
         JPanel botoesPanel = new JPanel();
         botoesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
+        botoesPanel.setBackground(new Color(21, 101, 192)); // Fundo do painel de botões
 
         JButton salvarButton = new JButton("Salvar");
-
+        salvarButton.setFont(new Font("Arial", Font.BOLD, 16));
+        salvarButton.setBackground(new Color(13, 71, 161)); // Azul escuro
+        salvarButton.setForeground(Color.WHITE); // Texto branco
+        
         // Adicionar a funcionalidade de salvar
         salvarButton.addActionListener(e -> salvarDados(tabela));
         
@@ -100,11 +120,14 @@ public class Configuracoes {
     
     private void salvarDados(JTable tabela) {
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction transaction = null;
 
         try {
-            transaction = session.beginTransaction();
+            // Criar o EntityManager para gerenciar a transação
+            EntityManager entityManager = HibernateUtil.getSessionFactory().createEntityManager();
+            EntityTransaction transaction = entityManager.getTransaction();
+
+            // Iniciar a transação
+            transaction.begin();
 
             // Iterar sobre as linhas da tabela
             for (int i = 0; i < model.getRowCount(); i++) {
@@ -125,15 +148,16 @@ public class Configuracoes {
 
                 if (categoriaId != null) {
                     // Carregar o objeto gerenciado pelo Hibernate
-                    ComidaQuantidadePadrao quantidade = session.get(ComidaQuantidadePadrao.class, categoriaId);
+                    ComidaQuantidadePadrao quantidade = entityManager.find(ComidaQuantidadePadrao.class, categoriaId);
 
                     if (quantidade != null) {
                         // Atualizar os valores
                         quantidade.setQuantidadeCarne(quantidadeCarne);
                         quantidade.setQuantidadeSalgado(quantidadeSalgado);
 
-                        // Persistir as alterações
-                        session.update(quantidade);
+                        // Persistir ou atualizar o objeto no banco de dados
+                        entityManager.merge(quantidade);
+                        entityManager.flush(); // Forçar a escrita no banco
                     }
                 }
             }
@@ -142,23 +166,17 @@ public class Configuracoes {
             transaction.commit();
             JOptionPane.showMessageDialog(panel, "Dados salvos com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
 
+            // Fechar o EntityManager
+            entityManager.close();
+
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(panel, "Os valores de quantidade devem ser números inteiros.", "Erro de Formato", JOptionPane.ERROR_MESSAGE);
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            JOptionPane.showMessageDialog(panel, "Erro ao salvar dados no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
-        } finally {
-            session.close();
+            JOptionPane.showMessageDialog(panel, "Erro ao salvar dados no banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
-
 
     public JPanel getPanel() {
         return panel;

@@ -51,42 +51,73 @@ public class SimulacaoBebidas extends JPanel {
         JPanel centralPanel = new JPanel(new GridLayout(1, 2)); // Divide em 2 colunas
         simulacaoPanel.add(centralPanel, BorderLayout.CENTER);
 
+        // Fonte maior para os JCheckBox
+        Font checkBoxFont = new Font("Arial", Font.PLAIN, 16); // Tamanho de fonte maior
+        Color fundoPainel = new Color(173, 216, 230); // Cor de fundo azul claro
+        
+        
         // Painel da Esquerda (Bebidas Não Alcoólicas)
         JPanel nonAlcoholicPanel = new JPanel();
         nonAlcoholicPanel.setLayout(new BoxLayout(nonAlcoholicPanel, BoxLayout.Y_AXIS));
         nonAlcoholicPanel.setBorder(BorderFactory.createTitledBorder("Bebidas Não Alcoólicas"));
+        nonAlcoholicPanel.setBackground(fundoPainel);
         
-        // Adiciona os itens de bebidas não alcoólicas
+     // Adiciona os itens de bebidas não alcoólicas
         this.cervejaSemAlcoolCheckbox = new JCheckBox("Cerveja Sem Álcool");
-        nonAlcoholicPanel.add(this.cervejaSemAlcoolCheckbox, centralPanel);
+        this.cervejaSemAlcoolCheckbox.setFont(checkBoxFont);
+        this.cervejaSemAlcoolCheckbox.setBackground(fundoPainel);
+        this.cervejaSemAlcoolCheckbox.setOpaque(true);
+        nonAlcoholicPanel.add(this.cervejaSemAlcoolCheckbox);
 
         this.aguaCheckBox = new JCheckBox("Água");
-        nonAlcoholicPanel.add(this.aguaCheckBox, centralPanel);
-        
-        this.sucoCheckBox = new JCheckBox("Suco");
-        nonAlcoholicPanel.add(this.sucoCheckBox, centralPanel);
-        
-        this.refrigeranteCheckBox = new JCheckBox("Refrigerante");
-        nonAlcoholicPanel.add(this.refrigeranteCheckBox, centralPanel);
+        this.aguaCheckBox.setFont(checkBoxFont);
+        this.aguaCheckBox.setBackground(fundoPainel);
+        this.aguaCheckBox.setOpaque(true);
+        nonAlcoholicPanel.add(this.aguaCheckBox);
 
+        this.sucoCheckBox = new JCheckBox("Suco");
+        this.sucoCheckBox.setFont(checkBoxFont);
+        this.sucoCheckBox.setBackground(fundoPainel);
+        this.sucoCheckBox.setOpaque(true);
+        nonAlcoholicPanel.add(this.sucoCheckBox);
+
+        this.refrigeranteCheckBox = new JCheckBox("Refrigerante");
+        this.refrigeranteCheckBox.setFont(checkBoxFont);
+        this.refrigeranteCheckBox.setBackground(fundoPainel);
+        this.refrigeranteCheckBox.setOpaque(true);
+        nonAlcoholicPanel.add(this.refrigeranteCheckBox);
+        
+        
         // Painel da Direita (Bebidas Alcoólicas)
         JPanel alcoholicPanel = new JPanel();
         alcoholicPanel.setLayout(new BoxLayout(alcoholicPanel, BoxLayout.Y_AXIS));
         alcoholicPanel.setBorder(BorderFactory.createTitledBorder("Bebidas Alcoólicas"));
+        alcoholicPanel.setBackground(fundoPainel);  
         
-        // Adiciona os itens de bebidas alcoólicas
+     // Adiciona os itens de bebidas alcoólicas
         this.cervejaCheckbox = new JCheckBox("Cerveja");
-        alcoholicPanel.add(this.cervejaCheckbox, centralPanel);
-        
+        this.cervejaCheckbox.setFont(checkBoxFont);
+        this.cervejaCheckbox.setBackground(fundoPainel);
+        this.cervejaCheckbox.setOpaque(true);
+        alcoholicPanel.add(this.cervejaCheckbox);
+
         this.vinhoCheckBox = new JCheckBox("Vinho");
-        alcoholicPanel.add(this.vinhoCheckBox, centralPanel);
-        
+        this.vinhoCheckBox.setFont(checkBoxFont);
+        this.vinhoCheckBox.setBackground(fundoPainel);
+        this.vinhoCheckBox.setOpaque(true);
+        alcoholicPanel.add(this.vinhoCheckBox);
+
         this.vodkaCheckBox = new JCheckBox("Vodka");
-        alcoholicPanel.add(this.vodkaCheckBox, centralPanel);
-        
+        this.vodkaCheckBox.setFont(checkBoxFont);
+        this.vodkaCheckBox.setBackground(fundoPainel);
+        this.vodkaCheckBox.setOpaque(true);
+        alcoholicPanel.add(this.vodkaCheckBox);
+
         this.drinkCheckBox = new JCheckBox("Drink");
-        alcoholicPanel.add(this.drinkCheckBox, centralPanel);
-        
+        this.drinkCheckBox.setFont(checkBoxFont);
+        this.drinkCheckBox.setBackground(fundoPainel);
+        this.drinkCheckBox.setOpaque(true);
+        alcoholicPanel.add(this.drinkCheckBox);
         // Adiciona os subpainéis ao painel central
         centralPanel.add(nonAlcoholicPanel);
         centralPanel.add(alcoholicPanel);
@@ -104,6 +135,7 @@ public class SimulacaoBebidas extends JPanel {
         painelBotoes.add(voltarButton);
         painelBotoes.add(cancelarButton);
         painelBotoes.add(simularButton);
+        painelBotoes.setBackground(fundoPainel); 
 
         // Adiciona os paineis ao painel principal
         add(simulacaoPanel, BorderLayout.CENTER);

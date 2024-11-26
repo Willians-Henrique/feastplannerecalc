@@ -14,16 +14,20 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
 
-public class ListarSimulacao {
+public class ListarSimulacao extends JPanel {
+    private static final long serialVersionUID = 1L;
     private JPanel panel;
     private DefaultTableModel model;
 
     public ListarSimulacao() {
+    	setBackground(new Color(13, 71, 161)); // Azul escuro no painel principal
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
+        panel.setBackground(new Color(21, 101, 192)); // Azul médio para o painel interno
 
-        JLabel label = new JLabel("Painel Listar Simulação", SwingConstants.CENTER);
+        JLabel label = new JLabel("Listar Simulação", SwingConstants.CENTER);
         label.setFont(new Font("Arial", Font.BOLD, 24));
+        label.setForeground(Color.BLACK); 
         panel.add(label, BorderLayout.NORTH);
 
         // Colunas da tabela
@@ -40,13 +44,25 @@ public class ListarSimulacao {
 
         // Criação da tabela
         JTable tabela = new JTable(model);
-
+        tabela.setBackground(new Color(144, 202, 249)); // Azul mais claro no fundo da tabela
+        tabela.setForeground(Color.BLACK); // Texto preto para boa leitura
+        tabela.setFont(new Font("Arial", Font.PLAIN, 14));
+        tabela.setGridColor(Color.WHITE); // Linhas da tabela brancas
+        tabela.setRowHeight(30); // Altura das linhas
+        
+        // Cabeçalho da tabela
+        JTableHeader header = tabela.getTableHeader();
+        header.setBackground(new Color(13, 71, 161)); // Azul escuro no cabeçalho
+        header.setForeground(Color.WHITE); // Texto branco no cabeçalho
+        header.setFont(new Font("Arial", Font.BOLD, 16));
+        
         // Renderizador e editor para a coluna de exclusão
         tabela.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
         tabela.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox(), model));
 
         tabela.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(tabela);
+        scrollPane.setBackground(new Color(21, 101, 192)); // Fundo do painel de scroll
         panel.add(scrollPane, BorderLayout.CENTER);
 
         carregarDadosReais();

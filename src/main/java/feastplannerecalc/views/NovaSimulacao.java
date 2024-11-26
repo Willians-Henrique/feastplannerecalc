@@ -7,7 +7,11 @@ public class NovaSimulacao extends JPanel {
     private static final long serialVersionUID = 1L;
 
     public NovaSimulacao() {
+
         setLayout(new BorderLayout());
+        
+        // Configura o fundo azul claro para o painel principal
+        setBackground(new Color(227, 242, 253)); // Azul claro (#E3F2FD)
         
         // Criação do painel para a divisão
         JPanel panel = new JPanel(new GridBagLayout());
@@ -16,12 +20,15 @@ public class NovaSimulacao extends JPanel {
         gbc.insets = new Insets(15, 15, 15, 15); // Padding de 15% (ajustável conforme necessário)
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
+        
 
         // Painel para a parte esquerda
         JPanel leftPanel = new JPanel(new GridBagLayout());
         leftPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        leftPanel.setBackground(Color.WHITE);
 
+        // Configura o fundo azul claro para o painel principal
+        leftPanel.setBackground(new Color(227, 242, 253)); // Azul claro (#E3F2FD)
+  
         // Configuração do botão e label da parte esquerda
         JButton salgadosButton = new JButton(new ImageIcon("src/main/java/feastplannerecalc/views/images/salgados.jpg"));
         salgadosButton.setBorder(BorderFactory.createEmptyBorder());
@@ -55,7 +62,9 @@ public class NovaSimulacao extends JPanel {
         // Painel para a parte direita
         JPanel rightPanel = new JPanel(new GridBagLayout());
         rightPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
-        rightPanel.setBackground(Color.WHITE);
+
+        // Configura o fundo azul claro para o painel principal
+        rightPanel.setBackground(new Color(227, 242, 253)); // Azul claro (#E3F2FD)
 
         // Configuração do botão e label da parte direita
         JButton churrascoButton = new JButton(new ImageIcon("src/main/java/feastplannerecalc/views/images/churrasco.jpg"));
@@ -89,6 +98,7 @@ public class NovaSimulacao extends JPanel {
         
         // Adiciona os dois painéis ao painel principal
         JPanel mainPanel = new JPanel(new GridLayout(1, 2));
+
         mainPanel.add(leftPanel);
         mainPanel.add(rightPanel);
         
