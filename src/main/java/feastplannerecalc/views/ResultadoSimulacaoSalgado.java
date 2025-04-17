@@ -54,10 +54,11 @@ public class ResultadoSimulacaoSalgado extends JPanel {
         // Quadro esquerdo: Salgados Assados e Fritos com Carne (Exemplos visuais)
         JPanel salgadosComCarnePanel = new JPanel();
         salgadosComCarnePanel.setLayout(new BorderLayout());
-        salgadosComCarnePanel.setBorder(BorderFactory.createTitledBorder("Salgados Assados e Fritos com Carne"));
+        salgadosComCarnePanel.setBorder(BorderFactory.createTitledBorder("Salgados Fritos"));
 
         JTextArea salgadosComCarneText = new JTextArea(10, 30);
         salgadosComCarneText.setEditable(false);
+        salgadosComCarneText.setFont(new Font("Arial", Font.PLAIN, 22)); // Define tamanho da fonte maior
         // Exibe os salgados com carne
      // Carrega e exibe os salgados com carne
         Map<String, Integer> salgadosComCarne = simulacao.obterSalgadosComCarne();
@@ -70,10 +71,11 @@ public class ResultadoSimulacaoSalgado extends JPanel {
         // Quadro direito: Salgados Sem Carne + Bebidas + Acessórios (Exemplos visuais)
         JPanel salgadosSemCarnePanel = new JPanel();
         salgadosSemCarnePanel.setLayout(new BorderLayout());
-        salgadosSemCarnePanel.setBorder(BorderFactory.createTitledBorder("Salgados Sem Carne + Bebidas + Acessórios"));
+        salgadosSemCarnePanel.setBorder(BorderFactory.createTitledBorder("Salgados Assados + Bebidas + Acompanhamentos"));
 
         JTextArea salgadosSemCarneText = new JTextArea(10, 30);
         salgadosSemCarneText.setEditable(false);
+        salgadosSemCarneText.setFont(new Font("Arial", Font.PLAIN, 22)); // Define tamanho da fonte maior
 
      // Carrega e exibe os salgados sem carne
         Map<String, Integer> salgadosSemCarne = simulacao.obterSalgadosSemCarne();
